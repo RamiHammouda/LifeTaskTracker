@@ -3,15 +3,16 @@ import { Form,Button, FormGroup,Spinner,Container, Row, Col } from "react-bootst
 import DatePicker from "react-datepicker";
 import getWeb3 from "../getWeb3";
 import Certificate from "../contracts/Certificate.json";
+import {loadBlockchainData,dateToEpoch} from "../utils/helper"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-datepicker/dist/react-datepicker.css";
-import { loadBlockchainData,dateToEpoch } from "../utils/helper.js";
+
 import { Redirect } from "react-router-dom";
 
-import Header from '../components/HeaderAdmin'
-import Footer from "../components/Footer";
-import LoginRegister from "../components/LoginRegister";
+// import Header from '../components/Header'
+// import Footer from "../components/Footer";
+// import LoginRegister from "../components/LoginRegister";
 
 class AddCertificate extends Component{
 
@@ -42,8 +43,9 @@ class AddCertificate extends Component{
     
 
     componentDidMount = async () => {
-          let data = loadBlockchainData();
-          this.setState({ account: (await data).accounts[0],web3: (await data).web3,contract: (await data).instance });
+          let data = await loadBlockchainData();
+        //   console.log(data);
+          this.setState({ account: (data).accounts[0],web3: (data).web3,contract: (data).instance });
 
     }
 
@@ -106,7 +108,7 @@ class AddCertificate extends Component{
             
             <div className="App">
                 <Fragment>
-                <Header/>
+                {/* <Header/> */}
 
                 <Container className="container-fluid">
 
@@ -201,8 +203,8 @@ class AddCertificate extends Component{
 
 
 
-                <Footer/>
-                <LoginRegister/>
+                {/* <Footer/> */}
+                {/* <LoginRegister/> */}
                 </Fragment>
                 
             </div>

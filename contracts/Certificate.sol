@@ -1,6 +1,7 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
+
 contract Certificate{
 
     address owner;
@@ -89,34 +90,6 @@ contract Certificate{
         return(i.issuerAddress,i.issuerName,i.dateRealisation,i.numCertificat);
     }
 
-/*,string[] memory _specialite ,string[] memory _session ,uint256[] memory _dateNaissance,string[] memory _lieuNaissance
-    
-    ,string[] memory _identif,string[] memory _nationalite*/
-    
-    function getCertificates(string memory _identifiant)view public returns(string[] memory )
-    {
-        string[] memory _etudiant = new string[](certs.length);
-        
-        
-        for(uint256 i=0;i<certs.length;i++)
-        {
-            CertificateBody memory c = Certificates[i];
-            if(keccak256(abi.encodePacked((c.identifiant))) == keccak256(abi.encodePacked((_identifiant))))
-            {
-                _etudiant[i] = c.Nom;
-                //_specialite[i] = c.Specialite;
-                //_session[i] = c.Session;
-                //_dateNaissance[i] = c.dateNaissance;
-                //_lieuNaissance[i] = c.lieuNaissance;
-                //_identif[i] = c.identifiant;
-                //_nationalite[i] = c.Nationalite;
-            }
-        }
-        
-        return(_etudiant);
-        //,_specialite,_session,_dateNaissance,_lieuNaissance,_identif,_nationalite
-        
-    }
 
     function verifyCertificate(
     string memory _etudiant,
