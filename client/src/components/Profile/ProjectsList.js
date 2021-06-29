@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 var projects = []
 
-export default class Projects extends Component {
+export default class ProjectsList extends Component {
 
     constructor(props) {
         super(props);
@@ -61,7 +61,7 @@ export default class Projects extends Component {
                         <Row>
                             <Col sm="12">
                                 <ul className="list-unstyled team-members">
-                                    {projects.splice(0, 3).map((project) => (
+                                    {projects.map((project) => (
                                         <li key={project._id}>
                                             <Row>
                                                 <Col md="9" xs="9">
@@ -71,7 +71,7 @@ export default class Projects extends Component {
                                                     </span>
                                                 </Col>
                                                 <Col className="text-right" md="3" xs="3">
-                                                    <a
+                                                <a
                                                         className="btn btn-outline-success btn-round btn-icon"
                                                         // color="primary"
                                                         href={project.link}
@@ -88,15 +88,7 @@ export default class Projects extends Component {
 
                             </Col>
                         </Row>
-                        <Row>
-                            <div className="update ml-auto mr-auto">
-                                <Link
-                                    className="btn btn-round btn-primary"
-                                    to="/profile/projects">
-                                    View All
-                                </Link>
-                            </div>
-                        </Row>
+                        
                         {/* end form here */}
                     </CardBody>
                 </Card>

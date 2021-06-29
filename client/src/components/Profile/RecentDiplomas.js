@@ -9,31 +9,52 @@ import {
     Col,
 } from "reactstrap";
 
+import { loadBlockchainData, epochToDate } from "../../utils/helper"
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
-import { Tooltip } from '@material-ui/core';
-import { epochToDate, loadBlockchainData } from '../../utils/helper';
 
 
-var certificates = [];
+
+
+
+function createData(image, issuer, speciality, session, fullName, birthday, birthPlace, id, nationality, status) {
+    return { image, issuer, speciality, session, fullName, birthday, birthPlace, id, nationality, status };
+}
+
+
+// const rows = [
+//     createData('esprit.jpg', "Esprit", "Systèmes informatiques et Mobiles", "Juin 2021", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 42069, "Tunisian", "success"),
+//     createData('poggers.jpg', "Poggers university", "Poggers", "Juin 2017", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 4269, "Tunisian", "success"),
+//     createData('kekw.jpg', "Top Kek university", "Top Kek", "Juin 2015", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 2069, "Tunisian", "danger"),
+// ];
+
+var rows = [];
+var rowsy = [];
 
 
 
 export default class RecentDiplomas extends Component {
 
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            web3: null,
-            contract: null,
-            account: null,
-            certificates: null,
-        }
+    state = {
+        loading: false,
+        web3: null,
+        contract: null,
+        account: null,
+        rows: null,
+
     }
 
 
-
     componentDidMount = async () => {
+        rows=[];
         let data = await loadBlockchainData();
         this.setState({ account: (data).accounts[0], web3: (data).web3, contract: (data).instance });
 
@@ -59,10 +80,10 @@ export default class RecentDiplomas extends Component {
                     "cin_passport": zz[5],
                     "dateRealisation": epochToDate(y[2]),
                     "numeroDiplome": y[3],
-                    "issuer": y[1],
-                    "certId": y[3],
+                    "issuer" : y[1],
+                    "certId" : y[3],
                 }
-                certificates.push(certificate);
+                rows.push(certificate);
                 // console.log(zz);
             } else {
                 // console.log("fail :(");
@@ -70,67 +91,70 @@ export default class RecentDiplomas extends Component {
 
         }
         this.setState({
-            certificates: certificates,
+            rows: rows,
         })
     }
 
 
     render() {
-
-        for (let index = 0; index < 3; index++) {
-            
-        }
-
         return (
             <div>
-                <Card>
+                <Card className="card-user">
                     <CardHeader>
-                        <CardTitle tag="h4">Recent Diplomas</CardTitle>
+                        <CardTitle tag="h5">Certificates</CardTitle>
                     </CardHeader>
                     <CardBody>
-                        <ul className="list-unstyled team-members">
-                            {certificates.slice(0,3).map((certificate)=>(
-                                <li>
-                                <Row>
-                                    <Col md="2" xs="2">
-                                        <div className="avatar">
-                                            <img
-                                                alt="..."
-                                                className="img-circle img-no-padding img-responsive"
-                                                src={require("assets/img/esprit.jpg")} />
-                                        </div>
-                                    </Col>
-                                    <Col md="7" xs="7">
-                                        <Link to="#">{certificate.specialite}</Link> <br />
-                                        <span className="text-muted">
-                                            <small>2017-2023</small>
-                                        </span>
-                                    </Col>
-                                    <Col className="text-right" md="3" xs="3">
-                                        <Button
-                                            className="btn-round btn-icon"
-                                            color="success"
-                                            outline
-                                            size="sm">
-                                            <Tooltip title="Verified">
-                                                <i className="fa fa-check" />
-                                            </Tooltip>
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </li>
-                            ))}
-                        </ul>
+                        {/* Add form here if u wanted to add idk */}
                         <Row>
-                            <div className="update ml-auto mr-auto">
-                                <Button
-                                    className="btn-round"
-                                    color="primary"
-                                    type="submit">
-                                    View all ( 10+ )
-                        </Button>
+                            <Col sm="12">
+                                <TableContainer component={Paper}>
+                                    <Table aria-label="simple table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell></TableCell>
+                                                <TableCell>Issuer</TableCell>
+                                                <TableCell>Speciality</TableCell>
+                                                <TableCell></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rows.slice(0,3).map((row,index) => (
+                                                <TableRow key={row.certId}>
+                                                    <TableCell component="th" scope="row">
+                                                        {/* fix later bellehy la tensa */}
+                                                        {/* <img src={require(`assets/img/${row.image}`)} alt={row.image} height="50" width="50" /> */}
+                                                        <img src={require("assets/img/esprit.jpg")} height="50" width="50" alt="henlo" />
+                                                        {/* {row.image} */}
+                                                    </TableCell>
+                                                    <TableCell align="left">{row.issuer}</TableCell>
+                                                    <TableCell align="left">{row.specialite}</TableCell>
+                                                    <TableCell align="left">
+                                                        <a
+                                                            className="btn btn-round btn-success"
+                                                            href={`http://localhost:3000/view/${index}`}
+                                                            type="submit">
+                                                            View Certificate
+                                                        </a>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <div className="ml-auto mr-auto">
+                                <Link
+                                    className="btn btn-round btn-primary"
+                                    to="/profile/diplomas"
+                                    >
+                                    View All
+                                </Link>
                             </div>
                         </Row>
+                        {/* end form here */}
                     </CardBody>
                 </Card>
             </div>

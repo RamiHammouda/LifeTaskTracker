@@ -16,6 +16,9 @@ import Row from "reactstrap/lib/Row";
 import Col from "reactstrap/lib/Col";
 import AddCertificate from "./components/AddCertificate.js"
 import ViewCertificate from "./components/ViewCertificate.js"
+import DiplomasList from "components/Profile/DiplomasList";
+import JobsList from "components/Profile/JobsList";
+import ProjectsList from "components/Profile/ProjectsList";
 
 
 
@@ -129,6 +132,13 @@ class App extends Component {
                   </Route>
                   <Route path="/profile/update" exact>
                     <UpdateProfile user={JSON.parse(localStorage.getItem("user"))} />
+                  </Route>
+                  <Route path="/profile/diplomas" exact component={DiplomasList}/>
+                  <Route path="/profile/projects" exact>
+                    <ProjectsList user={JSON.parse(localStorage.getItem("user"))}/>
+                  </Route>
+                  <Route path="/profile/jobs" exact>
+                    <JobsList user={JSON.parse(localStorage.getItem("user"))}/>
                   </Route>
                   <Route path="/login">
                     <Login />

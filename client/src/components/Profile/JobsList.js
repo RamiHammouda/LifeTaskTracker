@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
 import {
     Button,
     Card,
@@ -15,7 +14,7 @@ var jobs=[]
 
 
 
-export default class WorkExp extends Component {
+export default class JobsList extends Component {
 
     constructor(props) {
         super(props);
@@ -60,7 +59,7 @@ export default class WorkExp extends Component {
                         {/* Add form here if u wanted to add idk */}
                         <Row>
                             <Col sm="12">
-                                {jobs.splice(0,3).map((job) => (
+                                {jobs.map((job) => (
                                     <ul className="list-unstyled team-members" key={job._id}>
                                         <li>
                                             {job.title} <br />
@@ -73,15 +72,7 @@ export default class WorkExp extends Component {
                                 ))}
                             </Col>
                         </Row>
-                        <Row>
-                            <div className="update ml-auto mr-auto">
-                            <Link
-                                    className="btn btn-round btn-primary"
-                                    to="/profile/jobs">
-                                    View All
-                                </Link>
-                            </div>
-                        </Row>
+                        
                         <br />
                         {/* end form here */}
                     </CardBody>

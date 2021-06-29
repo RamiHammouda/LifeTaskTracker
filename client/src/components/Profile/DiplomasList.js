@@ -53,6 +53,7 @@ export default class DiplomasList extends Component {
 
 
     componentDidMount = async () => {
+        rows=[];
         let data = await loadBlockchainData();
         this.setState({ account: (data).accounts[0], web3: (data).web3, contract: (data).instance });
 
@@ -116,7 +117,7 @@ export default class DiplomasList extends Component {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {rows.map((row) => (
+                                            {rows.map((row,index) => (
                                                 <TableRow key={row.certId}>
                                                     <TableCell component="th" scope="row">
                                                         {/* fix later bellehy la tensa */}
@@ -127,12 +128,12 @@ export default class DiplomasList extends Component {
                                                     <TableCell align="left">{row.issuer}</TableCell>
                                                     <TableCell align="left">{row.specialite}</TableCell>
                                                     <TableCell align="left">
-                                                        <Button
-                                                            className="btn-round"
-                                                            color="success"
+                                                        <a
+                                                            className="btn btn-round btn-success"
+                                                            href={`http://localhost:3000/view/${index}`}
                                                             type="submit">
                                                             View Certificate
-                                                                    </Button>
+                                                        </a>
                                                     </TableCell>
                                                 </TableRow>
                                             ))}
@@ -142,16 +143,6 @@ export default class DiplomasList extends Component {
                             </Col>
                         </Row>
                         <br />
-                        <Row>
-                            <div className="ml-auto mr-auto">
-                                <Button
-                                    className="btn-round"
-                                    color="primary"
-                                    type="submit">
-                                    View All
-                                            </Button>
-                            </div>
-                        </Row>
                         {/* end form here */}
                     </CardBody>
                 </Card>

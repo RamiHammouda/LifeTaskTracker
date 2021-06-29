@@ -73,8 +73,8 @@ import {
 } from "reactstrap";
 
 import UserCard from "./UserCard";
+// import RecentDiplomas from "./RecentDiplomas";
 import RecentDiplomas from "./RecentDiplomas";
-import DiplomasList from "./DiplomasList";
 import WorkExp from "./WorkExp";
 import Projects from "./Projects";
 
@@ -121,13 +121,13 @@ export default class User extends React.Component {
                         {/* Basic user info */}
                         <Col md="4">
                             <UserCard user={this.props.user}/>
-                            <RecentDiplomas/>
+                            {/* <RecentDiplomas/> */}
                         </Col>
                         {/* Edit Profile */}
                         <Col md="8">
                             <Row>
                                 <Col sm="12">
-                                    <DiplomasList/>
+                                    <RecentDiplomas/>
                                 </Col>
                             </Row>
                             <Row>
@@ -135,7 +135,7 @@ export default class User extends React.Component {
                                     <WorkExp user={this.props.user}/>
                                 </Col>
                                 <Col md="6">
-                                    <Projects/>
+                                    <Projects user={this.props.user}/>
                                 </Col>
                             </Row>
                         </Col>
