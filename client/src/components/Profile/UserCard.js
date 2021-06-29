@@ -57,7 +57,7 @@ export default class UserCard extends Component {
                             <h5 className="title"><Link to="/profile">{this.props.user.name} {this.props.user.lastName}</Link></h5>
                             {/* <h5 className="title">Alaa Abdelbaki</h5> */}
 
-                            <p className="description">@ItsAlaa</p>
+                            <p className="description">{this.props.user.city}, {this.props.user.country}</p>
                         </div>
                         <p className="description text-center">
                             {this.props.user.bio}

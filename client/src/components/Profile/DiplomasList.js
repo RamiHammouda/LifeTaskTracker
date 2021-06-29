@@ -66,8 +66,8 @@ export default class DiplomasList extends Component {
             // console.log(zz);
             if (zz['identifiant'] === "13256600") {
                 let y = await this.state.contract.methods.getIssuer(index).call();
-                console.log("success pog");
-                console.log(y);
+                // console.log("success pog");
+                // console.log(y);
                 let certificate = {
                     "nom": zz[2],
                     "specialite": zz[0],
@@ -84,7 +84,7 @@ export default class DiplomasList extends Component {
                 rows.push(certificate);
                 // console.log(zz);
             } else {
-                console.log("fail :(");
+                // console.log("fail :(");
             }
 
         }

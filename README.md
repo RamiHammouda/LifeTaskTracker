@@ -1,5 +1,5 @@
-# CertificateTracker
-Mit Certificate Tracker können Sie Ihre Zertifikate dank Blockchain ganz einfach speichern und verifizieren
+# Easy Certificates
+With Easy Certificates you can easilly store and verify your certificates thanks to Blockchain  
 
 # Install Process 
 1. `cd Client`

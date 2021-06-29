@@ -14,6 +14,7 @@ import { Tooltip } from '@material-ui/core';
 import { epochToDate, loadBlockchainData } from '../../utils/helper';
 
 
+var certificates = [];
 
 
 
@@ -26,40 +27,60 @@ export default class RecentDiplomas extends Component {
             web3: null,
             contract: null,
             account: null,
+            certificates: null,
         }
     }
 
 
 
     componentDidMount = async () => {
-        // const { match: { params } } = this.props;
-        // this.setState({ hash: params.hash })
+        let data = await loadBlockchainData();
+        this.setState({ account: (data).accounts[0], web3: (data).web3, contract: (data).instance });
 
-        let data = loadBlockchainData();
-        this.setState({ account: (await data).accounts[0], web3: (await data).web3, contract: (await data).instance });
+        this.setState({ hash: "10" });
+        // console.log(this.state.hash);
 
-        let c = await this.state.contract.methods.getCertificate(5).call();
-        // let y = await this.state.contract.methods.getIssuer(this.state.hash).call();
+        for (let index = 0; index <= this.state.hash; index++) {
+            let zz = await this.state.contract.methods.Certificates(index).call();
 
-        console.log(c)
-        // console.log(y)
-        // this.setState({
-        //     nom: c[2],
-        //     specialite: c[0],
-        //     session: c[1],
-        //     dateNaissance: epochToDate(c[3]),
-        //     lieuNaissance: c[4],
-        //     nationalite: c[6],
-        //     cin_passport: c[5],
-        //     dateRealisation: epochToDate(y[2]),
-        //     numeroDiplome: y[3],
-        // })
+            // console.log("this is zz :)");
+            // console.log(zz);
+            if (zz['identifiant'] === "13256600") {
+                let y = await this.state.contract.methods.getIssuer(index).call();
+                // console.log("success pog");
+                // console.log(y);
+                let certificate = {
+                    "nom": zz[2],
+                    "specialite": zz[0],
+                    "session": zz[1],
+                    "dateNaissance": epochToDate(zz[3]),
+                    "lieuNaissance": zz[4],
+                    "nationalite": zz[6],
+                    "cin_passport": zz[5],
+                    "dateRealisation": epochToDate(y[2]),
+                    "numeroDiplome": y[3],
+                    "issuer": y[1],
+                    "certId": y[3],
+                }
+                certificates.push(certificate);
+                // console.log(zz);
+            } else {
+                // console.log("fail :(");
+            }
 
-
+        }
+        this.setState({
+            certificates: certificates,
+        })
     }
 
 
     render() {
+
+        for (let index = 0; index < 3; index++) {
+            
+        }
+
         return (
             <div>
                 <Card>
@@ -68,7 +89,8 @@ export default class RecentDiplomas extends Component {
                     </CardHeader>
                     <CardBody>
                         <ul className="list-unstyled team-members">
-                            <li>
+                            {certificates.slice(0,3).map((certificate)=>(
+                                <li>
                                 <Row>
                                     <Col md="2" xs="2">
                                         <div className="avatar">
@@ -79,7 +101,7 @@ export default class RecentDiplomas extends Component {
                                         </div>
                                     </Col>
                                     <Col md="7" xs="7">
-                                        <Link to="#">Esprit</Link> <br />
+                                        <Link to="#">{certificate.specialite}</Link> <br />
                                         <span className="text-muted">
                                             <small>2017-2023</small>
                                         </span>
@@ -97,64 +119,7 @@ export default class RecentDiplomas extends Component {
                                     </Col>
                                 </Row>
                             </li>
-                            <li>
-                                <Row>
-                                    <Col md="2" xs="2">
-                                        <div className="avatar">
-                                            <img
-                                                alt="..."
-                                                className="img-circle img-no-padding img-responsive"
-                                                src={require("assets/img/poggers.jpg")} />
-                                        </div>
-                                    </Col>
-                                    <Col md="7" xs="7">
-                                        <Link to="#">Pog University</Link> <br />
-                                        <span className="text-muted">
-                                            <small>2015-2017</small>
-                                        </span>
-                                    </Col>
-                                    <Col className="text-right" md="3" xs="3">
-                                        <Button
-                                            className="btn-round btn-icon"
-                                            color="success"
-                                            outline
-                                            size="sm">
-                                            <Tooltip title="Verified">
-                                                <i className="fa fa-check" />
-                                            </Tooltip>
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </li>
-                            <li>
-                                <Row>
-                                    <Col md="2" xs="2">
-                                        <div className="avatar">
-                                            <img
-                                                alt="..."
-                                                className="img-circle img-no-padding img-responsive"
-                                                src={require("assets/img/kekw.jpg")} />
-                                        </div>
-                                    </Col>
-                                    <Col md="7" xs="7">
-                                        <Link to="#">EzClap College</Link> <br />
-                                        <span className="text-muted">
-                                            <small>2010-2015</small>
-                                        </span>
-                                    </Col>
-                                    <Col className="text-right" md="3" xs="3">
-                                        <Button
-                                            className="btn-round btn-icon"
-                                            color="danger"
-                                            outline
-                                            size="sm">
-                                            <Tooltip title="Not verified yet">
-                                                <i className="fa fa-times" />
-                                            </Tooltip>
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </li>
+                            ))}
                         </ul>
                         <Row>
                             <div className="update ml-auto mr-auto">

@@ -132,7 +132,7 @@ export default class User extends React.Component {
                             </Row>
                             <Row>
                                 <Col md="6">
-                                    <WorkExp/>
+                                    <WorkExp user={this.props.user}/>
                                 </Col>
                                 <Col md="6">
                                     <Projects/>

@@ -8,8 +8,11 @@ import {
     Col,
 } from "reactstrap";
 
+// import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 import { withSnackbar } from "../Snackbar";
+// import countrySelect from "./input.select.country";
 
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 class UpdateFrom extends Component {
 
@@ -31,6 +34,14 @@ class UpdateFrom extends Component {
             linkedin: this.props.user.linkedin,
         }
         this.updateProfile = this.updateProfile.bind(this);
+    }
+
+    selectCountry(val) {
+        this.setState({ country: val });
+    }
+
+    selectRegion(val) {
+        this.setState({ city: val });
     }
 
     updateProfile() {
@@ -74,7 +85,10 @@ class UpdateFrom extends Component {
         // )
     }
 
+
+
     render() {
+        // const countriesList = require("./countries.json");
         return (
             <div>
                 {/* Add form here if u wanted to add idk */}
@@ -156,26 +170,20 @@ class UpdateFrom extends Component {
                     <Row>
                         <Col md="12">
                             <FormGroup>
-                                <label>Address</label>
+                                <label>Profile Picture</label>
                                 <Input
-                                    defaultValue={this.state.address}
-                                    placeholder="Home Address"
-                                    type="text"
-                                    onChange={event => {
-                                        this.setState({
-                                            address: event.target.value,
-                                        });
-                                        // console.log(this.state.address);
-                                    }}
+                                    type="file"
+                                    
                                 />
                             </FormGroup>
                         </Col>
                     </Row>
                     <Row>
-                        <Col className="pr-1" md="4">
+                        <Col className="pr-1" md="6">
                             <FormGroup>
-                                <label>City</label>
-                                <Input
+                                <label>Country</label>
+                                {/* <Input
+
                                     defaultValue={this.state.city}
                                     placeholder="City"
                                     type="text"
@@ -185,34 +193,36 @@ class UpdateFrom extends Component {
                                         });
                                         // console.log("changed");
                                     }}
-                                />
+                                /> */}
+<CountryDropdown
+                                    className="form-control"
+
+                                    value={this.state.country}
+                                    onChange={(val) => this.selectCountry(val)} />
+                                
                             </FormGroup>
                         </Col>
-                        <Col className="px-1" md="4">
+                        <Col className="pl-1" md="6">
                             <FormGroup>
-                                <label>Country</label>
-                                <Input
+                                <label>City</label>
+                                {/* <Input
                                     defaultValue={this.state.country}
                                     placeholder="Country"
-                                    type="text"
+                                    type="select"
                                     onChange={event => {
                                         this.setState({
                                             country: event.target.value,
                                         });
                                         // console.log(this.state.country);
-                                    }}
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col className="pl-1" md="4">
-                            <FormGroup>
-                                <label>Postal Code</label>
-                                <Input placeholder="ZIP Code" type="number" defaultValue={this.state.postalCode} onChange={event => {
-                                        this.setState({
-                                            postalCode: event.target.value,
-                                        });
-                                        console.log(this.state.postalCode);
-                                    }}/>
+                                    }}>
+                                </Input> */}
+                                <RegionDropdown
+                                    className="form-control"
+                                    country={this.state.country}
+                                    value={this.state.city}
+                                    onChange={(val) => this.selectRegion(val)} />
+                                {/* <countrySelect/> */}
+
                             </FormGroup>
                         </Col>
                     </Row>
@@ -230,6 +240,7 @@ class UpdateFrom extends Component {
                                         // console.log("changed");
                                     }}
                                 />
+
                             </FormGroup>
                         </Col>
                     </Row>
@@ -245,11 +256,11 @@ class UpdateFrom extends Component {
                         <Col sm="8" lg="6">
                             <FormGroup>
                                 <Input placeholder="Profile Link" defaultValue={this.state.facebook} onChange={event => {
-                                        this.setState({
-                                            facebook: event.target.value,
-                                        });
-                                        // console.log("changed");
-                                    }}/>
+                                    this.setState({
+                                        facebook: event.target.value,
+                                    });
+                                    // console.log("changed");
+                                }} />
                             </FormGroup>
                         </Col>
                     </Row>
@@ -265,11 +276,11 @@ class UpdateFrom extends Component {
                         <Col sm="8" lg="6">
                             <FormGroup>
                                 <Input placeholder="Profile Link" defaultValue={this.state.twitter} onChange={event => {
-                                        this.setState({
-                                            twitter: event.target.value,
-                                        });
-                                        // console.log("changed");
-                                    }}/>
+                                    this.setState({
+                                        twitter: event.target.value,
+                                    });
+                                    // console.log("changed");
+                                }} />
                             </FormGroup>
                         </Col>
                     </Row>
@@ -285,11 +296,11 @@ class UpdateFrom extends Component {
                         <Col sm="8" lg="6">
                             <FormGroup>
                                 <Input placeholder="Profile Link" defaultValue={this.state.linkedin} onChange={event => {
-                                        this.setState({
-                                            linkedin: event.target.value,
-                                        });
-                                        // console.log("changed");
-                                    }}/>
+                                    this.setState({
+                                        linkedin: event.target.value,
+                                    });
+                                    // console.log("changed");
+                                }} />
                             </FormGroup>
                         </Col>
                     </Row>

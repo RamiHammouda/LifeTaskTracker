@@ -79,6 +79,7 @@ import {
 import RecentDiplomas from "./RecentDiplomas";
 import UserCard from "./UserCard";
 import UpdateFrom from "./UpdateFrom";
+import { Tabs, Tab } from "react-bootstrap";
 
 
 
@@ -97,21 +98,21 @@ class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = { user: null };
-      }
+    }
 
     getUser() {
         // console.log("entered here :) hello boi");
         fetch(`http://192.168.1.17:5000/users/${this.props.user._id}`)
-          .then(res => res.json())
-          .then(res => {
-            this.setState({ user: res });
-            // localStorage.setItem("user", JSON.stringify(res));
-          })
-          .catch(err => this.setState({ user: err }));
-      }
+            .then(res => res.json())
+            .then(res => {
+                this.setState({ user: res });
+                // localStorage.setItem("user", JSON.stringify(res));
+            })
+            .catch(err => this.setState({ user: err }));
+    }
 
-      componentDidMount(){this.getUser();}
-      
+    componentDidMount() { this.getUser(); }
+
 
     render() {
 
@@ -119,7 +120,7 @@ class User extends React.Component {
 
         if (this.state.user == null) {
             return (<div></div>)
-          }
+        }
 
         return (
             <>
@@ -127,8 +128,8 @@ class User extends React.Component {
                     <Row>
                         {/* Basic user info */}
                         <Col md="4">
-                            <UserCard user={this.state.user}/>
-                            <RecentDiplomas/>
+                            <UserCard user={this.state.user} />
+                            <RecentDiplomas />
                         </Col>
                         {/* Edit Profile */}
                         <Col md="8">
@@ -137,7 +138,11 @@ class User extends React.Component {
                                     <CardTitle tag="h5">Update Details</CardTitle>
                                 </CardHeader>
                                 <CardBody>
-                                   <UpdateFrom user={this.state.user}/>
+                                    <Tabs defaultActiveKey="basicInfo" id="uncontrolled-tab-example">
+                                        <Tab title="Basic Info" eventKey="basicInfo">
+                                            <UpdateFrom  user={this.state.user} />
+                                        </Tab>
+                                    </Tabs>
                                 </CardBody>
                             </Card>
                         </Col>
