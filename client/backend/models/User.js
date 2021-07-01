@@ -19,9 +19,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    profilePicture:{
-        type: String,
-        required:false,
+    profilePicture: {
+        type:String,
+        required:false
     },
     address:{
         type:String,

@@ -10,6 +10,7 @@ import {
 
 // import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 import { withSnackbar } from "../Snackbar";
+import axios from "axios";
 // import countrySelect from "./input.select.country";
 
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
@@ -45,44 +46,27 @@ class UpdateFrom extends Component {
     }
 
     updateProfile() {
-        // console.log("entered here !!");
-        // console.log(this.props.user._id);
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password,
-                name: this.state.name,
-                lastName: this.state.lastName,
-                profilePic: this.state.profilePic,
-                address: this.state.address,
-                city: this.state.city,
-                country: this.state.country,
-                postalCode: this.state.postalCode,
-                bio: this.state.bio,
-                facebook: this.state.facebook,
-                twitter: this.state.twitter,
-                linkedin: this.state.linkedin
-            })
-        };
-        fetch(`http://localhost:5000/users/update/${this.props.user._id}`, requestOptions)
-            .then(response => {
-                // console.log(response);
-                console.log(requestOptions.body);
-                if (response.status === 200) {
-                    this.props.snackbarShowMessage(`Updated Successfully !`);
-                } else {
-                    this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
-                }
-            });
-        console.log("snackbar should be out !! ");
-        // return (
-        //     // <Snackbar
-        //     //     // severity="success"
-        //     //     // message="Updated successfully !"
-        //     // />
-        // )
+
+        const formData = new FormData();
+        formData.append("profilePicture",this.state.profilePicture);
+        formData.append("email", this.state.email);
+        formData.append("password", this.state.password);
+        formData.append("name", this.state.name);
+        formData.append("lastName", this.state.lastName);
+        formData.append("address", this.state.address);
+        formData.append("city", this.state.city);
+        formData.append("country", this.state.country);
+        formData.append("bio", this.state.bio);
+
+        axios.post(`http://localhost:5000/users/update/${this.props.user._id}`, formData).then(res => {
+            if (res.status == 200) {
+                this.props.snackbarShowMessage(`Updated Successfully !`);
+            }
+        }).catch(err => {
+            console.log(err);
+            this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
+        })
+
     }
 
 
@@ -173,7 +157,13 @@ class UpdateFrom extends Component {
                                 <label>Profile Picture</label>
                                 <Input
                                     type="file"
-                                    
+                                    accept="image/*"
+                                    onChange={event => {
+                                        const file = event.target.files[0];
+                                        this.setState({
+                                            profilePicture: file,
+                                        })
+                                    }}
                                 />
                             </FormGroup>
                         </Col>
@@ -194,12 +184,12 @@ class UpdateFrom extends Component {
                                         // console.log("changed");
                                     }}
                                 /> */}
-<CountryDropdown
+                                <CountryDropdown
                                     className="form-control"
 
                                     value={this.state.country}
                                     onChange={(val) => this.selectCountry(val)} />
-                                
+
                             </FormGroup>
                         </Col>
                         <Col className="pl-1" md="6">

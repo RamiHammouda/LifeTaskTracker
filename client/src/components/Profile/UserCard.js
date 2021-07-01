@@ -9,13 +9,16 @@ import React, { Component } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 
 
+// const baseUrl = "assets/img/";
 
+// var image = "";
 
 export default class UserCard extends Component {
 
-    // constructor() {
-    //     super();
-    //     this.goToSocial = this.goToSocial.bind(this);
+    // constructor(props) {
+    //     super(props);
+    //     // this.goToSocial = this.goToSocial.bind(this);
+    //     image = baseUrl+this.props.user.profilePicture;
     //   }
 
 
@@ -52,7 +55,8 @@ export default class UserCard extends Component {
                             <img
                                 alt="..."
                                 className="avatar border-gray"
-                                src={require("assets/img/henlo.png")}
+                                // src={require("assets/img/henlo.png")}
+                                src={require(`assets/img/${this.props.user.profilePicture}`)}
                             />
                             <h5 className="title"><Link to="/profile">{this.props.user.name} {this.props.user.lastName}</Link></h5>
                             {/* <h5 className="title">Alaa Abdelbaki</h5> */}

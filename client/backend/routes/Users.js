@@ -1,4 +1,31 @@
 const router = require('express').Router();
+var multer = require('multer');
+//Multer setup
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, '../src/assets/img/');
+  },
+  filename: function (req, file, cb) {
+      cb(null,new Date().toISOString().replace(/:/g, '-')+file.originalname);
+      // cb(null,file.originalname);
+  }
+});
+
+const fileFilter = (req,file,cb)=>{
+  if(file.mimetype === "image/*"){
+    cb(null,true);
+  }else{
+    cb(null,false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+  // fileFilter : fileFilter
+}).single("profilePicture");
+//Setup end
 let User = require('../models/User');
 
 //Bcrypt
@@ -50,29 +77,39 @@ router.route("/delete/:id").delete((req, res) => {
 
 //updates the user
 // /user/update/:id
-router.route("/update/:id").post((req, res) => {
+router.route("/update/:id").post(upload, (req, res) => {
+  // console.log(req.body);
+  var filePath ="";
+  filePath = req.file.path;
+  filePath = filePath.substr(18,filePath.length-18);
+  console.log(filePath);
   User.findById(req.params.id)
     .then(user => {
-      
       user.email = req.body.email;
       user.password = bcrypt.hashSync(req.body.password, saltRounds);
       user.name = req.body.name;
       user.lastName = req.body.lastName;
-      user.profilePicture = req.body.profilePicture;
-      user.address = req.body.address;
+      user.profilePicture = filePath;
+      // user.address = req.body.address;
       user.city = req.body.city;
       user.country = req.body.country;
-      user.postalCode = req.body.postalCode;
+      // user.postalCode = req.body.postalCode;
       user.bio = req.body.bio;
       user.facebook = req.body.facebook;
       user.twitter = req.body.twitter;
       user.linkedin = req.body.linkedin;
 
       user.save()
-        .then(() => res.json("updated successfully !"))
-        .catch(() => res.status(400).json("Error: " + err));
+        .then(() => res.status(200).json("updated successfully !"))
+        .catch((err) => {
+          res.status(400).json("Error: " + err);
+          console.log(err);
+        });
     })
-    .catch(() => res.status(400).json("Error: " + err));
+    .catch((err) => {
+      res.status(400).json("Error: " + err);
+      console.log(err);
+    });
 });
 
 module.exports = router;
