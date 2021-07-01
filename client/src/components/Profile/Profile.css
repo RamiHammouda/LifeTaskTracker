@@ -1,0 +1,18 @@
+img{
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    border-radius:50%;
+    border-color: black;
+    border-style: solid;
+}
+
+
+.profile-feed{
+    padding-top:50%;
+}
+
+
+.user-info{
+    padding-top: 20px;
+}

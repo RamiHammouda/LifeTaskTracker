@@ -46,11 +46,6 @@
 				"name": "Certificates",
 				"outputs": [
 					{
-						"internalType": "uint256",
-						"name": "id",
-						"type": "uint256"
-					},
-					{
 						"internalType": "string",
 						"name": "Specialite",
 						"type": "string"
@@ -84,16 +79,6 @@
 						"internalType": "string",
 						"name": "Nationalite",
 						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "numCertificat",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "dateRealisation",
-						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -160,19 +145,6 @@
 						"type": "uint256"
 					}
 				],
-				"name": "deleteCertificate",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_id",
-						"type": "uint256"
-					}
-				],
 				"name": "getCertificate",
 				"outputs": [
 					{
@@ -209,25 +181,6 @@
 						"internalType": "string",
 						"name": "",
 						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_identifiant",
-						"type": "string"
-					}
-				],
-				"name": "getCertificates",
-				"outputs": [
-					{
-						"internalType": "string[]",
-						"name": "",
-						"type": "string[]"
 					}
 				],
 				"stateMutability": "view",
@@ -355,64 +308,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_id",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "_etudiant",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "_specialite",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "_session",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_dateNaissance",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "_lieuNaissance",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "_identifiant",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "_nationalite",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_dateRealisation",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "_numCertificat",
-						"type": "string"
-					}
-				],
-				"name": "updateCertificate",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "string",
 						"name": "_etudiant",
 						"type": "string"
@@ -483,7 +378,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/Certificate.sol": "Certificate"
+			"localhost/Certificate.sol": "Certificate"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -497,12 +392,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/Certificate.sol": {
-			"keccak256": "0x3c766f7e96babc2856f0dc2fbbac6947b2194b4c19998e07ca016955b45bcf23",
+		"localhost/Certificate.sol": {
+			"keccak256": "0xda8bb4162cdc7b2ca1b919e85e6050faff4cfa0bb435600b7781a7a9994ee4b8",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://7bb4fde42ebf05c3357e5fc402ac5c12d73f9a440b8bfb77a106eb356ad8a699",
-				"dweb:/ipfs/QmUnVsJVrT6AFECYmT62LAUBDL7ux4zYmeyAUy2tkuv7dC"
+				"bzz-raw://d8dcb2f0bbb947cdce785a99d43698cefbb43ec2c8419cf3e0d4a70e2041eec8",
+				"dweb:/ipfs/Qmce5cGuD4Yeg87kEZ7cgphKu2LLQ6ieAAuv2F7YbrmvFr"
 			]
 		}
 	},

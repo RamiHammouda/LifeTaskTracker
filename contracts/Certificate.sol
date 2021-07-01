@@ -1,6 +1,7 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
+
 contract Certificate{
 
     address owner;
@@ -24,7 +25,7 @@ contract Certificate{
     }
 
     struct CertificateBody{
-        uint256 id;
+
         string Specialite;//
         string Session;//
         string Nom;//
@@ -32,9 +33,6 @@ contract Certificate{
         string lieuNaissance;//
         string identifiant;//
         string Nationalite;//
-        
-        string numCertificat;//
-        uint256 dateRealisation;//
     }
 
 
@@ -60,8 +58,7 @@ contract Certificate{
     string memory _nationalite,
     uint256 _dateRealisation,
     string memory _numCertificat) onlyOwner public{
-        
-        Certificates[numCertificateIssued].id = numCertificateIssued;
+
         Certificates[numCertificateIssued].Specialite = _specialite;
         Certificates[numCertificateIssued].Session = _session;
         Certificates[numCertificateIssued].Nom = _etudiant;
@@ -69,83 +66,18 @@ contract Certificate{
         Certificates[numCertificateIssued].lieuNaissance=_lieuNaissance;
         Certificates[numCertificateIssued].identifiant=_identifiant;
         Certificates[numCertificateIssued].Nationalite=_nationalite;
-        
-        Certificates[numCertificateIssued].dateRealisation=_dateRealisation;
-            Certificates[numCertificateIssued].numCertificat=_numCertificat;
-        
         certs.push(numCertificateIssued);
 
             Issuers[numCertificateIssued].issuerAddress=owner;
             Issuers[numCertificateIssued].issuerName="ESPRIT";
-            //Issuers[numCertificateIssued].dateRealisation=_dateRealisation;
-            //Issuers[numCertificateIssued].numCertificat=_numCertificat;
+            Issuers[numCertificateIssued].dateRealisation=_dateRealisation;
+            Issuers[numCertificateIssued].numCertificat=_numCertificat;
              iss.push(numCertificateIssued);
 
         emit Issued(_etudiant,"ESPRIT",numCertificateIssued);
 
         numCertificateIssued +=1;
 
-    }
-    
-    function updateCertificate(uint256 _id,
-    string memory _etudiant,
-    string memory _specialite,
-    string memory _session,
-    uint256 _dateNaissance,
-    string memory _lieuNaissance,
-    string memory _identifiant,
-    string memory _nationalite,
-    uint256 _dateRealisation,
-    string memory _numCertificat) public{
-        
-        Certificates[_id].Specialite = _specialite;
-        Certificates[_id].Session = _session;
-        Certificates[_id].Nom = _etudiant;
-        Certificates[_id].dateNaissance=_dateNaissance;
-        Certificates[_id].lieuNaissance=_lieuNaissance;
-        Certificates[_id].identifiant=_identifiant;
-        Certificates[_id].Nationalite=_nationalite;
-        
-
-            //Issuers[_id].issuerAddress=owner;
-            //Issuers[_id].issuerName="ESPRIT";
-            Issuers[_id].dateRealisation=_dateRealisation;
-            Issuers[_id].numCertificat=_numCertificat;
-             
-        
-    }
-    // 0 1 2 3 
-    function deleteCertificate(uint256 _id) onlyOwner public
-    {
-        delete Certificates[_id];
-        delete certs[_id];
-        delete iss[_id];
-        
-        if(keccak256(abi.encodePacked((_id))) == keccak256(abi.encodePacked((certs.length))))
-        {
-            numCertificateIssued-=1;
-            
-        }
-         if(keccak256(abi.encodePacked((_id))) == 0)
-        {
-            numCertificateIssued-=1;
-            for(uint256 index=1;index<=certs.length;index++)
-            {
-                Certificates[index].id=index-1;
-                Certificates[index]=Certificates[index-1];
-                
-                Issuers[index]=Issuers[index-1];
-            }
-        }
-        
-        numCertificateIssued-=1;
-            for(uint256 index=_id;index<=certs.length;index++)
-            {
-                Certificates[index].id=index-1;
-                Certificates[index]=Certificates[index-1];
-                Issuers[index]=Issuers[index-1];
-            }
-        
     }
 
     function getCertificate(uint256 _id)view public returns(string memory,string memory,string memory,uint256,string memory,string memory,string memory){
@@ -158,34 +90,6 @@ contract Certificate{
         return(i.issuerAddress,i.issuerName,i.dateRealisation,i.numCertificat);
     }
 
-/*,string[] memory _specialite ,string[] memory _session ,uint256[] memory _dateNaissance,string[] memory _lieuNaissance
-    
-    ,string[] memory _identif,string[] memory _nationalite*/
-    
-    function getCertificates(string memory _identifiant)view public returns(string[] memory )
-    {
-        string[] memory _etudiant = new string[](certs.length);
-        
-        
-        for(uint256 i=0;i<certs.length;i++)
-        {
-            CertificateBody memory c = Certificates[i];
-            if(keccak256(abi.encodePacked((c.identifiant))) == keccak256(abi.encodePacked((_identifiant))))
-            {
-                _etudiant[i] = c.Nom;
-                //_specialite[i] = c.Specialite;
-                //_session[i] = c.Session;
-                //_dateNaissance[i] = c.dateNaissance;
-                //_lieuNaissance[i] = c.lieuNaissance;
-                //_identif[i] = c.identifiant;
-                //_nationalite[i] = c.Nationalite;
-            }
-        }
-        
-        return(_etudiant);
-        //,_specialite,_session,_dateNaissance,_lieuNaissance,_identif,_nationalite
-        
-    }
 
     function verifyCertificate(
     string memory _etudiant,
