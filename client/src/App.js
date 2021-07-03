@@ -14,17 +14,12 @@ import DeleteCertificate from "./components/DeleteCertificate";
 
 import Login from "./components/Login";
 import SignUp from "./components/Signup";
-import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import UpdateProfile from "./components/Profile/updateProfile";
-import Container from "reactstrap/lib/Container";
-import Row from "reactstrap/lib/Row";
-import Col from "reactstrap/lib/Col";
-import AddCertificate from "./components/AddCertificate.js"
-import ViewCertificate from "./components/ViewCertificate.js"
 import DiplomasList from "components/Profile/DiplomasList";
 import JobsList from "components/Profile/JobsList";
 import ProjectsList from "components/Profile/ProjectsList";
+import { Container } from "@material-ui/core";
 
 class App extends Component {
   constructor(props) {
@@ -65,10 +60,11 @@ class App extends Component {
       <Route exact path="/view/:hash" component={ViewCertificate}></Route>
       <Route exact component={Error404}/>
       </Switch> */
+    
       <Switch>
         <Route path="/" exact>
                     <Home user={JSON.parse(localStorage.getItem("user"))} />
-                  </Route>
+        </Route>
                   <Route path="/profile" exact>
                     <Profile user={JSON.parse(localStorage.getItem("user"))} />
                   </Route>
@@ -92,8 +88,12 @@ class App extends Component {
                   <Route exact path="/view/:hash" component={ViewCertificate}/>
         <Route exact component={Error404}/>
       </Switch>
+     
 
-  );
+  )
+  }
+
+  }
   getUser() {
     // console.log("entered here :) hello boi");
     fetch("http://localhost:5000/users/6035037c49f6b243b4357f7a")
@@ -110,7 +110,6 @@ class App extends Component {
   // }
 
   x =this.getUser();
+}
 
-
-  }
-
+export default App

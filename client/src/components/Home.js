@@ -10,10 +10,6 @@ class Home extends Component{
             <div className="App">
                 <Fragment>
                 <Header/>
-
-
-
-
                 <Footer/>
                 <LoginRegister/>
                 </Fragment>

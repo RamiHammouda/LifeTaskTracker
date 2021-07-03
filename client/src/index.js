@@ -1,19 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+  } from "react-router-dom";
 
 
 import "./assets/scss/paper-dashboard.scss?v=1.2.0";
-import "./assets/demo/demo.css";
+//import "./assets/demo/demo.css";
 
 ReactDOM.render(
-    <BrowserRouter>
+    <Router>
         <App />
-    </BrowserRouter>,
+    </Router>,
      document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

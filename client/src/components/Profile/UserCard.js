@@ -41,13 +41,14 @@ export default class UserCard extends Component {
     // }
 
     render() {
+        console.log(this.props.user)
         return (
             <div>
                 <Card className="card-user">
                     <div className="image">
                         <img
                             alt="..."
-                            src={require("assets/img/damir-bosnjak.jpg")}
+                            src={"img/damir-bosnjak.jpg"}
                         />
                     </div>
                     <CardBody>
@@ -56,7 +57,7 @@ export default class UserCard extends Component {
                                 alt="..."
                                 className="avatar border-gray"
                                 // src={require("assets/img/henlo.png")}
-                                src={require(`assets/img/${this.props.user.profilePicture}`)}
+                                src={`img/${this.props.user.profilePicture}`}
                             />
                             <h5 className="title"><Link to="/profile">{this.props.user.name} {this.props.user.lastName}</Link></h5>
                             {/* <h5 className="title">Alaa Abdelbaki</h5> */}

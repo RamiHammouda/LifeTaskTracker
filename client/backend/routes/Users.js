@@ -4,7 +4,7 @@ var multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, '../src/assets/img/');
+      cb(null, '../public/img/');
   },
   filename: function (req, file, cb) {
       cb(null,new Date().toISOString().replace(/:/g, '-')+file.originalname);
@@ -81,7 +81,9 @@ router.route("/update/:id").post(upload, (req, res) => {
   // console.log(req.body);
   var filePath ="";
   filePath = req.file.path;
-  filePath = filePath.substr(18,filePath.length-18);
+  console.log(filePath)
+  
+  filePath = filePath.substr(filePath.lastIndexOf('\\')+1,filePath.length);
   console.log(filePath);
   User.findById(req.params.id)
     .then(user => {

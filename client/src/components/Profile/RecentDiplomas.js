@@ -59,30 +59,33 @@ export default class RecentDiplomas extends Component {
         this.setState({ account: (data).accounts[0], web3: (data).web3, contract: (data).instance });
 
         this.setState({ hash: "10" });
+        let size = await this.state.contract.methods.totalCertificates().call();
         // console.log(this.state.hash);
 
-        for (let index = 0; index <= this.state.hash; index++) {
+        for (let index = 0; index <= size -1 ; index++) {
             let zz = await this.state.contract.methods.Certificates(index).call();
-
+            console.log(zz)
             // console.log("this is zz :)");
             // console.log(zz);
             if (zz['identifiant'] === "13256600") {
-                let y = await this.state.contract.methods.getIssuer(index).call();
+                let y = await this.state.contract.methods.Issuers(index).call();
+                console.log(y)
                 // console.log("success pog");
                 // console.log(y);
                 let certificate = {
-                    "nom": zz[2],
-                    "specialite": zz[0],
-                    "session": zz[1],
-                    "dateNaissance": epochToDate(zz[3]),
-                    "lieuNaissance": zz[4],
-                    "nationalite": zz[6],
+                    "nom": zz['Nom'],
+                    "specialite": zz['Specialite'],
+                    "session": zz['Session'],
+                    "dateNaissance": epochToDate(zz['dateNaissance']),
+                    "lieuNaissance": zz['lieuNaissance'],
+                    "nationalite": zz['Nationalite'],
                     "cin_passport": zz[5],
-                    "dateRealisation": epochToDate(y[2]),
-                    "numeroDiplome": y[3],
+                    "dateRealisation": epochToDate(zz['dateRealisation']),
+                    "numeroDiplome": zz['numCertificat'],
                     "issuer" : y[1],
-                    "certId" : y[3],
+                    "certId" : index,
                 }
+                this.setState({'certId':index})
                 rows.push(certificate);
                 // console.log(zz);
             } else {
@@ -97,6 +100,7 @@ export default class RecentDiplomas extends Component {
 
 
     render() {
+        
         return (
             <div>
                 <Card className="card-user">
@@ -123,7 +127,7 @@ export default class RecentDiplomas extends Component {
                                                     <TableCell component="th" scope="row">
                                                         {/* fix later bellehy la tensa */}
                                                         {/* <img src={require(`assets/img/${row.image}`)} alt={row.image} height="50" width="50" /> */}
-                                                        <img src={require("assets/img/esprit.jpg")} height="50" width="50" alt="henlo" />
+                                                        <img src={"img/esprit.jpg"} height="50" width="50" alt="henlo" />
                                                         {/* {row.image} */}
                                                     </TableCell>
                                                     <TableCell align="left">{row.issuer}</TableCell>
@@ -131,7 +135,7 @@ export default class RecentDiplomas extends Component {
                                                     <TableCell align="left">
                                                         <a
                                                             className="btn btn-round btn-success"
-                                                            href={`http://localhost:3000/view/${index}`}
+                                                            href={`http://localhost:3000/view/${this.state.certId}`}
                                                             type="submit">
                                                             View Certificate
                                                         </a>
