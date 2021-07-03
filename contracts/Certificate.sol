@@ -107,9 +107,6 @@ contract Certificate{
         Certificates[_id].identifiant=_identifiant;
         Certificates[_id].Nationalite=_nationalite;
         
-
-            //Issuers[_id].issuerAddress=owner;
-            //Issuers[_id].issuerName="ESPRIT";
             Issuers[_id].dateRealisation=_dateRealisation;
             Issuers[_id].numCertificat=_numCertificat;
              

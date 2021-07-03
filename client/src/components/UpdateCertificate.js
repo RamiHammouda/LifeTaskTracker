@@ -40,19 +40,19 @@ export default class UpdateCertificate extends Component {
           this.setState({ account: (await data).accounts[0],web3: (await data).web3,contract: (await data).instance });
 
 
-          let c = await this.state.contract.methods.getCertificate(this.state.hash).call();
+          let c = await this.state.contract.methods.Certificates(this.state.hash).call();
           let y = await this.state.contract.methods.getIssuer(this.state.hash).call();
-
+           // console.log(c)
           this.setState({
-            nom: c[2],
-            specialite: c[0],
-            session: c[1],
-            dateNaissance: epochToDate(c[3]),
-            lieuNaissance: c[4],
-            nationalite:c[6],
-            cin_passport: c[5],
-            dateRealisation: epochToDate(y[2]),
-            numeroDiplome: y[3],
+            nom: c['Nom'],
+            specialite: c['Specialite'],
+            session: c['Session'],
+            dateNaissance: epochToDate(c['dateNaissance']),
+            lieuNaissance: c['lieuNaissance'],
+            nationalite:c['Nationalite'],
+            cin_passport: c['identifiant'],
+            dateRealisation: epochToDate(c['dateRealisation']),
+            numeroDiplome: c['numCertificat'],
         })
 
         this.setState({loading:true})
@@ -61,17 +61,18 @@ export default class UpdateCertificate extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
-
+        // dateToEpoch(new Date(this.state.dateNaissance)),
+        // dateToEpoch(new Date(this.state.dateRealisation)),
         let transaction = await this.state.contract.methods.updateCertificate(
             this.state.hash,
                 this.state.nom,
                 this.state.specialite,
                 this.state.session,
-                dateToEpoch(new Date(this.state.dateNaissance)),
+                dateToEpoch(new Date()),
                 this.state.lieuNaissance,
                 this.state.cin_passport,
                 this.state.nationalite,
-                dateToEpoch(new Date(this.state.dateRealisation)),
+                dateToEpoch(new Date()),
                 this.state.numeroDiplome
         ).send({ from: this.state.account });
 
