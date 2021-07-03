@@ -9,36 +9,8 @@ import React, { Component } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 
 
-// const baseUrl = "assets/img/";
-
-// var image = "";
-
 export default class UserCard extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     // this.goToSocial = this.goToSocial.bind(this);
-    //     image = baseUrl+this.props.user.profilePicture;
-    //   }
-
-
-    //   goToSocial(social) {
-    //     preventDefault();
-    //     switch (social) {
-    //         case "facebook":
-    //             window.location.href = 'http://www.facebook.com/'+this.props.user.facebook;
-    //             break;
-    //         case "twitter":
-    //             window.location.href = 'http://www.twitter.com/'+this.props.user.twitter;
-    //             break;
-    //         case "linkedin":
-    //             window.location.href = 'http://www.linkedin.com/'+this.props.user.linkedin;
-    //             break;
-    //         default:
-    //             window.location.href = 'http://www.google.com/'+link;
-    //     }
-    //     window.location.href = 'http://google.com';
-    // }
 
     render() {
         console.log(this.props.user)

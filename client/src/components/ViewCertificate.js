@@ -44,7 +44,7 @@ class ViewCertificate extends Component {
   /* Center and scale the image nicely */
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
-  backgroundSize: '100%',
+  backgroundSize: '90%',
     }
 
    
@@ -91,7 +91,7 @@ class ViewCertificate extends Component {
                <Form style={{textAlign: 'center'}}>
                    
             
-               <br/><br/>
+               <br/>
                <br/><br/>
                <Row >
                    <Col style={{textAlign: 'center'}}>
