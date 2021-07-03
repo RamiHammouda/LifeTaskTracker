@@ -1,57 +1,22 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'PT Sans', sans-serif;
+.App {
+  text-align: center;
 }
 
-a:hover{
-  text-decoration: inherit;
-  color:#FFF;
+.App-logo {
+  height: 40vmin;
 }
 
-.btn{
-  
-}
-
-.profile{
-  margin-top: 50px;
-}
-
-.home,
-.services,
-.products,
-.sign-up {
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
-  height: 90vh;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-.services {
-  background-image: url('/images/img-2.jpg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
-
-.products {
-  background-image: url('/images/img-1.jpg');
-  background-position: center;
-  background-size: fill;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
-
-.sign-up {
-  background-image: url('/images/img-8.jpg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
+.App-link {
+  color: #09d3ac;
 }
