@@ -30,6 +30,7 @@ class UpdateFrom extends Component {
             city: this.props.user.city,
             country: this.props.user.country,
             bio: this.props.user.bio,
+            profileId: this.props.user.profileId,
             facebook: this.props.user.facebook,
             twitter: this.props.user.twitter,
             linkedin: this.props.user.linkedin,
@@ -46,9 +47,9 @@ class UpdateFrom extends Component {
     }
 
     updateProfile() {
-
+        console.log(this.state.profilePicture);
         const formData = new FormData();
-        formData.append("profilePicture",this.state.profilePicture);
+        formData.append("profilePicture", this.state.profilePicture);
         formData.append("email", this.state.email);
         formData.append("password", this.state.password);
         formData.append("name", this.state.name);
@@ -57,6 +58,10 @@ class UpdateFrom extends Component {
         formData.append("city", this.state.city);
         formData.append("country", this.state.country);
         formData.append("bio", this.state.bio);
+        formData.append("profileId", this.state.profileId);
+        formData.append("facebook", this.state.facebook);
+        formData.append("twitter", this.state.twitter);
+        formData.append("linkedin", this.state.linkedin);
 
         axios.post(`http://localhost:5000/users/update/${this.props.user._id}`, formData).then(res => {
             if (res.status == 200) {
@@ -78,27 +83,6 @@ class UpdateFrom extends Component {
                 {/* Add form here if u wanted to add idk */}
                 <Form>
                     <Row>
-                        {/* <Col className="pr-1" md="4">
-                                                <FormGroup>
-                                                    <label>First Name</label>
-                                                    <Input
-                                                        defaultValue="Alaa"
-                                                        disabled
-                                                        placeholder="Company"
-                                                        type="text"
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                            <Col className="px-1" md="4">
-                                                <FormGroup>
-                                                    <label>Last Name</label>
-                                                    <Input
-                                                        defaultValue="Abdelbaki"
-                                                        placeholder="Username"
-                                                        type="text"
-                                                    />
-                                                </FormGroup>
-                                            </Col> */}
                         <Col md="12">
                             <FormGroup>
                                 <label htmlFor="email">
@@ -172,18 +156,6 @@ class UpdateFrom extends Component {
                         <Col className="pr-1" md="6">
                             <FormGroup>
                                 <label>Country</label>
-                                {/* <Input
-
-                                    defaultValue={this.state.city}
-                                    placeholder="City"
-                                    type="text"
-                                    onChange={event => {
-                                        this.setState({
-                                            city: event.target.value,
-                                        });
-                                        // console.log("changed");
-                                    }}
-                                /> */}
                                 <CountryDropdown
                                     className="form-control"
 
@@ -195,23 +167,11 @@ class UpdateFrom extends Component {
                         <Col className="pl-1" md="6">
                             <FormGroup>
                                 <label>City</label>
-                                {/* <Input
-                                    defaultValue={this.state.country}
-                                    placeholder="Country"
-                                    type="select"
-                                    onChange={event => {
-                                        this.setState({
-                                            country: event.target.value,
-                                        });
-                                        // console.log(this.state.country);
-                                    }}>
-                                </Input> */}
                                 <RegionDropdown
                                     className="form-control"
                                     country={this.state.country}
                                     value={this.state.city}
                                     onChange={(val) => this.selectRegion(val)} />
-                                {/* <countrySelect/> */}
 
                             </FormGroup>
                         </Col>
@@ -227,13 +187,34 @@ class UpdateFrom extends Component {
                                         this.setState({
                                             bio: event.target.value,
                                         });
-                                        // console.log("changed");
+                                    }}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md="12">
+                            <FormGroup>
+                                <label>Profile Link</label>
+                                <Input
+                                    type="text"
+                                    defaultValue={this.state.profileId}
+                                    onChange={event => {
+                                        this.setState({
+                                            profileId: event.target.value,
+                                        });
+                                    }}
+                                    placeholder="Profile URL"
+                                    onBlur={event => {
+                                        //Check profile link validity here
+
                                     }}
                                 />
 
                             </FormGroup>
                         </Col>
                     </Row>
+
                     <Row>
                         <Col sm="12" lg="3">
                             <h5><i className="fa fa-facebook" /> Facebook</h5>
@@ -249,7 +230,6 @@ class UpdateFrom extends Component {
                                     this.setState({
                                         facebook: event.target.value,
                                     });
-                                    // console.log("changed");
                                 }} />
                             </FormGroup>
                         </Col>
@@ -269,7 +249,6 @@ class UpdateFrom extends Component {
                                     this.setState({
                                         twitter: event.target.value,
                                     });
-                                    // console.log("changed");
                                 }} />
                             </FormGroup>
                         </Col>
@@ -289,7 +268,6 @@ class UpdateFrom extends Component {
                                     this.setState({
                                         linkedin: event.target.value,
                                     });
-                                    // console.log("changed");
                                 }} />
                             </FormGroup>
                         </Col>
@@ -301,7 +279,15 @@ class UpdateFrom extends Component {
                                 color="success"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    this.updateProfile();
+                                    if (this.state.profileId === "" || this.state.profileId === undefined) {
+                                        this.props.snackbarShowMessage(`Profile URL cannot be empty !`,`error`)
+                                    } else {
+                                        if (this.state.profileId.includes(" ")) {
+                                            this.props.snackbarShowMessage(`Profile URL cannot contain spaces !`, "error");
+                                        }else{
+                                            this.updateProfile();
+                                        }
+                                    }
                                 }}>
                                 Update Profile
                             </Button>
