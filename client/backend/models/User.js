@@ -7,10 +7,6 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
-    profileId:{
-        type: String,
-        unique: true,
-    },
     password: {
         type: String,
         required: true,

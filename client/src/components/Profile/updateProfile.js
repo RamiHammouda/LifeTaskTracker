@@ -82,7 +82,6 @@ import UpdateFrom from "./UpdateFrom";
 import { Tabs, Tab } from "react-bootstrap";
 import UpdateProjects from "./UpdateProjects";
 import UpdateJobs from "./UpdateJobs";
-import { Container } from "@material-ui/core";
 
 
 
@@ -105,10 +104,10 @@ class User extends React.Component {
 
     getUser() {
         // console.log("entered here :) hello boi");
-        fetch(`http://localhost:5000/users/${window.location.href.replace("http://localhost:3000/profile/","").replace("/update","")}`)
+        fetch(`http://localhost:5000/users/${this.props.user._id}`)
             .then(res => res.json())
             .then(res => {
-                this.setState({ user: res[0] });
+                this.setState({ user: res });
                 // localStorage.setItem("user", JSON.stringify(res));
             })
             .catch(err => this.setState({ user: err }));
@@ -126,8 +125,7 @@ class User extends React.Component {
         }
 
         return (
-            <Container> 
-                <br/>
+            <>
                 <div className="content">
                     <Row>
                         {/* Basic user info */}
@@ -158,7 +156,7 @@ class User extends React.Component {
                         </Col>
                     </Row>
                 </div>
-            </Container>
+            </>
         );
     }
 }

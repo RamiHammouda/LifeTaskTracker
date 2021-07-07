@@ -19,7 +19,6 @@ export default class WorkExp extends Component {
 
     constructor(props) {
         super(props);
-        // console.log(this.props.user._id);
         this.state = {
             jobs: null,
             full:false

@@ -9,46 +9,18 @@ import React, { Component } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 
 
-// const baseUrl = "assets/img/";
-
-// var image = "";
-
 export default class UserCard extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     // this.goToSocial = this.goToSocial.bind(this);
-    //     image = baseUrl+this.props.user.profilePicture;
-    //   }
-
-
-    //   goToSocial(social) {
-    //     preventDefault();
-    //     switch (social) {
-    //         case "facebook":
-    //             window.location.href = 'http://www.facebook.com/'+this.props.user.facebook;
-    //             break;
-    //         case "twitter":
-    //             window.location.href = 'http://www.twitter.com/'+this.props.user.twitter;
-    //             break;
-    //         case "linkedin":
-    //             window.location.href = 'http://www.linkedin.com/'+this.props.user.linkedin;
-    //             break;
-    //         default:
-    //             window.location.href = 'http://www.google.com/'+link;
-    //     }
-    //     window.location.href = 'http://google.com';
-    // }
 
     render() {
-        //console.log(this.props.user)
+        console.log(this.props.user)
         return (
             <div>
                 <Card className="card-user">
                     <div className="image">
                         <img
                             alt="..."
-                            src={"http://localhost:3000/img/damir-bosnjak.jpg"}
+                            src={"img/damir-bosnjak.jpg"}
                         />
                     </div>
                     <CardBody>
@@ -57,22 +29,21 @@ export default class UserCard extends Component {
                                 alt="..."
                                 className="avatar border-gray"
                                 // src={require("assets/img/henlo.png")}
-                                src={`http://localhost:3000/img/${this.props.user.profilePicture}`}
+                                src={`img/${this.props.user.profilePicture}`}
                             />
-                            <h5 className="title"><Link to={`/profile/${this.props.user.profileId}`}>{this.props.user.name} {this.props.user.lastName}</Link></h5>
+                            <h5 className="title"><Link to="/profile">{this.props.user.name} {this.props.user.lastName}</Link></h5>
                             {/* <h5 className="title">Alaa Abdelbaki</h5> */}
 
                             <p className="description">{this.props.user.city}, {this.props.user.country}</p>
                         </div>
-                        <br/>
                         <p className="description text-center">
-                            <b>{this.props.user.bio}</b>
+                            {this.props.user.bio}
                         </p>
                         <Row>
                             <div className="update ml-auto mr-auto">
-                                {!window.location.href.includes("/update") &&
+                                {useLocation.pathname !== "/profile/update" &&
                                     <Link
-                                        to={`/profile/${this.props.user.profileId}/update`}
+                                        to="/profile/update"
                                         className="btn btn-primary btn-round"
                                         type="submit">
                                         Update Profile
@@ -85,7 +56,7 @@ export default class UserCard extends Component {
                         <hr />
                         <div className="button-container">
                             <Row>
-                                <Col className="ml-auto" lg="4" md="12" xs="4"> 
+                                <Col className="ml-auto" lg="4" md="12" xs="4">
                                     <h5>
                                         Facebook <br />
                                         <a

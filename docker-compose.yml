@@ -1,0 +1,24 @@
+version: "3"
+services:
+    db:
+        image: mongo
+        container_name: mongodb
+        ports:
+            - 27017:27017
+        restart: unless-stopped
+    node:
+        image: easy-certificate:latest
+        container_name: node
+        restart: unless-stopped
+        working_dir: /app
+        ports:
+            - 3000:3000
+            - 5000:5000
+        
+
+    ganache_cli:
+        image: trufflesuite/ganache-cli:latest
+        container_name: ganache_cli
+        restart: unless-stopped
+        ports:
+            - 8545:8545

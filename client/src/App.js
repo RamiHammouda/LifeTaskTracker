@@ -65,11 +65,10 @@ class App extends Component {
         <Route path="/" exact>
                     <Home user={JSON.parse(localStorage.getItem("user"))} />
         </Route>
-                  {/* <Route path="/profile" exact>
+                  <Route path="/profile" exact>
                     <Profile user={JSON.parse(localStorage.getItem("user"))} />
-                  </Route> */}
-                  <Route path="/profile/:profileUrl" exact component={Profile}/>
-                  <Route path="/profile/:profileUrl/update" exact>
+                  </Route>
+                  <Route path="/profile/update" exact>
                     <UpdateProfile user={JSON.parse(localStorage.getItem("user"))} />
                   </Route>
                   <Route path="/profile/diplomas" exact component={DiplomasList}/>

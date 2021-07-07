@@ -19,11 +19,11 @@ function Footer() {
                                 </Link>
 
                                 <Text>
-                                    During the summer my wife and I got to go on an amazing road trip in Vancouver.
+                                    Get Authentic Certificates available anywhere !
                                 </Text>
 
                                 <Text classes="copyright-txt">
-                                    &copy; {new Date().getFullYear()} Businex Ltd. All Rights Reserved.
+                                    &copy; {new Date().getFullYear()} EasyCertificate Ltd. All Rights Reserved 2021.
                                 </Text>
                             </div>
                         </div>
