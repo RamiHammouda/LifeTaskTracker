@@ -13,11 +13,11 @@ class Header extends Component{
         window.removeEventListener('scroll', this.isSticky);
     }
 
-    isSticky = (e)=>{
-        const header = document.querySelector('header');
-        const scrollTop = window.scrollY;
-        scrollTop >= 250 ? header.classList.add('sticky') : header.classList.remove('sticky');
-    };
+    // isSticky = (e)=>{
+    //     const header = document.querySelector('header');
+    //     const scrollTop = window.scrollY;
+    //     scrollTop >= 250 ? header.classList.add('sticky') : header.classList.remove('sticky');
+    // };
 
     render(){
         return (

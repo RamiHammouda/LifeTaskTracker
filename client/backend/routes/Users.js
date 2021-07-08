@@ -4,19 +4,19 @@ var multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, '../public/img/');
+    cb(null, '../public/img/');
   },
   filename: function (req, file, cb) {
-      cb(null,new Date().toISOString().replace(/:/g, '-')+file.originalname);
-      // cb(null,file.originalname);
+    cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+    // cb(null,file.originalname);
   }
 });
 
-const fileFilter = (req,file,cb)=>{
-  if(file.mimetype === "image/*"){
-    cb(null,true);
-  }else{
-    cb(null,false);
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/*") {
+    cb(null, true);
+  } else {
+    cb(null, false);
   }
 };
 
@@ -42,13 +42,26 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-//Gets user by ID
-// /users/:id
-router.route('/:id').get(async (req, res) => {
-  await User.findById(req.params.id)
+//Gets user by profileUrl
+// /users/find
+router.route('/find').get(async (req, res) => {
+  await User.find({
+    email: req.query.email,
+  })
     .then(user => res.json(user))
     .catch(err => res.status(400).json("Error: " + err));
 });
+
+// Gets user by ID
+// /users/:id
+router.route('/:profileId').get(async (req, res) => {
+  await User.find({
+    profileId: req.params.profileId
+  })
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
 
 
 //Creates a new User
@@ -79,11 +92,13 @@ router.route("/delete/:id").delete((req, res) => {
 // /user/update/:id
 router.route("/update/:id").post(upload, (req, res) => {
   // console.log(req.body);
-  var filePath ="";
-  filePath = req.file.path;
-  console.log(filePath)
-  
-  filePath = filePath.substr(filePath.lastIndexOf('\\')+1,filePath.length);
+  var filePath = "";
+  if(req.file != null){
+    filePath = req.file.path;
+    console.log(filePath)
+    filePath = filePath.substr(filePath.lastIndexOf('\\') + 1, filePath.length);
+  }
+
   console.log(filePath);
   User.findById(req.params.id)
     .then(user => {
@@ -91,7 +106,11 @@ router.route("/update/:id").post(upload, (req, res) => {
       user.password = bcrypt.hashSync(req.body.password, saltRounds);
       user.name = req.body.name;
       user.lastName = req.body.lastName;
-      user.profilePicture = filePath;
+      // console.log(req.file.path);
+      if (req.file != null) {
+        user.profilePicture = filePath;
+      }
+      user.profileId = req.body.profileId;
       // user.address = req.body.address;
       user.city = req.body.city;
       user.country = req.body.country;

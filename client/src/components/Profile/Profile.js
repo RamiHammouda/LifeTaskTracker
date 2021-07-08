@@ -1,5 +1,5 @@
 
-import React,{Fragment} from "react";
+import React, { Fragment } from "react";
 import Header from '../../components/Header'
 import Footer from "../../components/Footer";
 import LoginRegister from "../../components/LoginRegister";
@@ -22,45 +22,71 @@ import { Container } from "@material-ui/core";
 
 export default class User extends React.Component {
 
-
+    constructor(props) {
+        super(props);
+        this.state = { user: null, };
+    }
 
     render() {
-        return (
-            <Fragment>
-            <Header/>
-            <Container>
-                <br/>
-                <div className="content">
-                    <Row>
-                        {/* Basic user info */}
-                        <Col md="4">
-                            <UserCard user={this.props.user}/>
-                            {/* <RecentDiplomas/> */}
-                        </Col>
-                        {/* Edit Profile */}
-                        <Col md="8">
+        if (this.state.user == null) {
+            this.getUser(this.props.match.params.profileUrl);
+            console.log(this.state.user);
+            if(this.state.user === []){
+                return(<div>User not found</div>);
+            }
+            return (<></>);
+        } else {
+
+            return (
+                <Fragment>
+                    <Header />
+                    <Container>
+                        <br />
+                        <div className="content">
                             <Row>
-                                <Col sm="12">
-                                    <RecentDiplomas/>
+                                {/* Basic user info */}
+                                <Col md="4">
+                                    <UserCard user={this.state.user[0]} />
+                                    {/* <RecentDiplomas/> */}
+                                </Col>
+                                {/* Edit Profile */}
+                                <Col md="8">
+                                    <Row>
+                                        <Col sm="12">
+                                            <RecentDiplomas />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md="6">
+                                            <WorkExp user={this.state.user[0]} />
+                                        </Col>
+                                        <Col md="6">
+                                            <Projects user={this.state.user[0]} />
+                                        </Col>
+                                    </Row>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col md="6">
-                                    <WorkExp user={this.props.user}/>
-                                </Col>
-                                <Col md="6">
-                                    <Projects user={this.props.user}/>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                </div>
-            </Container>
-            <Footer/>
-            <LoginRegister/>
-            </Fragment>
-           
-        );
+                        </div>
+                    </Container>
+                    <Footer />
+                    <LoginRegister />
+                </Fragment>
+
+            );
+        }
+    }
+
+    getUser(profileId) {
+        // console.log("entered here :) hello boi");
+        fetch("http://localhost:5000/users/" + profileId)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({ user: res });
+                // console.log(this.state.user);
+                // localStorage.setItem("user", JSON.stringify(res));
+            })
+            .catch(err => this.setState({ user: err }));
     }
 }
 
