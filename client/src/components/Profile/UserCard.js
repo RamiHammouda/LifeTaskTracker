@@ -46,7 +46,7 @@ export default class UserCard extends Component {
     }
 
     render() {
-        console.log(this.props.user)
+        // console.log(this.props.user)
         return (
             <div>
                 <Card className="card-user">

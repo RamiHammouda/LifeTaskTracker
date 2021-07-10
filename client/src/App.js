@@ -97,7 +97,7 @@ class App extends Component {
   }
   getUser() {
     // console.log("entered here :) hello boi");
-    fetch("http://localhost:5000/users/omar.tb")
+    fetch("http://localhost:5000/users/alaa.abdelbaki")
       .then(res => res.json())
       .then(res => {
         this.setState({ user: res });

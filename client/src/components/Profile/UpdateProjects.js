@@ -159,7 +159,7 @@ export class UpdateProjects extends Component {
                         </Row>
                     </Form>
                 </div>
-                <BootstrapTable keyField='id' data={projects} columns={columns} />
+                {/* <BootstrapTable keyField='id' data={projects} columns={columns} /> */}
 
 
             </div>

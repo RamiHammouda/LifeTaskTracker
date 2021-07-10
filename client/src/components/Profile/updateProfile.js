@@ -118,22 +118,22 @@ class User extends React.Component {
 
 
     componentWillMount() {
-        console.log(this.props.user[0].profileId );
+        // console.log(this.props.user[0].profileId );
         if (`${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}` != JSON.parse(localStorage.getItem("user"))[0].profileId) {
-            console.log("no no no no ");
+            // console.log("no no no no ");
             // this.props.history.pushstate(null,"/");
         } else {
             this.setState({
                 allow: true,
             })
-            console.log(this.state.allow);
+            // console.log(this.state.allow);
         }
         this.getUser();
         // console.log(!window.location.href.includes("/update"));
         // console.log(this.props.user[0].profileId);
         // console.log(JSON.parse(localStorage.getItem("user"))[0].profileId);
-        console.log("allow state is: " + this.state.allow);
-        console.log(!window.location.href.includes("/update") && this.props.user[0].profileId != JSON.parse(localStorage.getItem("user"))[0].profileId)
+        // console.log("allow state is: " + this.state.allow);
+        // console.log(!window.location.href.includes("/update") && this.props.user[0].profileId != JSON.parse(localStorage.getItem("user"))[0].profileId)
     }
 
 

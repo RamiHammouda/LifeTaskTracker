@@ -5,7 +5,18 @@ const jobSchema = new Schema({
     title: {
         type: String,
         required: true,
-        unique: true,
+    },
+    company: {
+        type: String,
+        required: true,
+    },
+    started: {
+        type: Number,
+        required: true,
+    },
+    left: {
+        type: Number,
+        required: true,
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,ref:'User',
