@@ -85,7 +85,7 @@ export default class ProjectsList extends Component {
                                                 <Col md="9" xs="9">
                                                     <Link to="#">{project.title}</Link> <br />
                                                     <span className="text-muted">
-                                                        <small>2010-2015</small>
+                                                        {/* <small>2010-2015</small> */}
                                                     </span>
                                                 </Col>
                                                 <Col className="text-right" md="3" xs="3">

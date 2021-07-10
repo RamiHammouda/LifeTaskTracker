@@ -87,7 +87,7 @@ export default class JobsList extends Component {
                                         <li>
                                             {job.title} <br />
                                             <span className="text-muted">
-                                                <small>2020-2025</small>
+                                                <small>{job.started}-{job.left}</small>
                                             </span>
                                             <br />
                                         </li>

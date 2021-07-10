@@ -66,9 +66,9 @@ export default class Projects extends Component {
                                             <Row>
                                                 <Col md="9" xs="9">
                                                     <Link to="#">{project.title}</Link> <br />
-                                                    <span className="text-muted">
+                                                    {/* <span className="text-muted">
                                                         <small>2010-2015</small>
-                                                    </span>
+                                                    </span> */}
                                                 </Col>
                                                 <Col className="text-right" md="3" xs="3">
                                                     <a
