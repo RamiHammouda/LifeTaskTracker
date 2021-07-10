@@ -20,8 +20,8 @@ router.route('/').get((req, res) => {
 // /Projects/:id
 router.route('/:id').get(async (req, res) => {
   await Project.find({
-      "user":req.params.id
-    }
+    "user": req.params.id
+  }
   )
     .then(Project => res.json(Project))
     .catch(err => res.status(400).json("Error: " + err));
@@ -35,7 +35,7 @@ router.route('/add').post((req, res) => {
   const link = req.body.link;
   const user = req.body.userId;
 
-  const newProject = new Project({ title, link, user});
+  const newProject = new Project({ title, link, user });
 
   newProject.save()
     .then(() => res.json('Project added!'))
@@ -46,9 +46,9 @@ router.route('/add').post((req, res) => {
 //Deletes the Project
 // /Projects/delete/:id
 router.route("/delete/:id").delete((req, res) => {
-  const Project = Project.findByIdAndDelete(req.params.id)
+  Project.findByIdAndDelete(req.params.id)
     .then(() => res.json("deleted successfully"))
-    .catch(() => res.status(400).json("could not delete ! Error: " + err));
+    .catch((err) => res.status(400).json("could not delete ! Error: " + err));
 });
 
 //updates the Project
@@ -56,16 +56,15 @@ router.route("/delete/:id").delete((req, res) => {
 router.route("/update/:id").post((req, res) => {
   Project.findById(req.params.id)
     .then(Project => {
-      
+
       Project.title = req.body.title;
       Project.link = req.body.link;
-      Project.user = req.body.user;
 
       Project.save()
         .then(() => res.json("updated successfully !"))
-        .catch(() => res.status(400).json("Error: " + err));
+        .catch((err) => res.status(400).json("Error: " + err));
     })
-    .catch(() => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;

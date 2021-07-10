@@ -12,23 +12,10 @@ import {
     Row,
     Col,
 } from "reactstrap";
+import { Table } from 'react-bootstrap';
+
 
 var projects = [];
-
-const columns = [{
-    dataField: 'title',
-    text: 'Project Title'
-}, {
-    dataField: 'link',
-    text: 'Link'
-}, {
-    dataField: 'update',
-    text: 'Update'
-}, {
-    dataField: 'delete',
-    text: 'Delete'
-}
-];
 
 const paginationOption = {
     custom: true,
@@ -43,14 +30,18 @@ export class UpdateProjects extends Component {
         super(props);
         this.state = {
             // id: this.props.user._id,
-            title: null,
-            link: null,
+            projectId: "",
+            title: "",
+            link: "",
             userId: this.props.user._id,
+            update: false,
         }
-        this.AddJob = this.AddJob.bind(this);
+        this.addProject = this.addProject.bind(this);
+        this.updateProject = this.updateProject.bind(this);
+        this.deleteProject = this.deleteProject.bind(this);
     }
 
-    AddJob() {
+    addProject() {
         // console.log("entered here !!");
         // console.log(this.props.user._id);
         const requestOptions = {
@@ -67,6 +58,13 @@ export class UpdateProjects extends Component {
                 // console.log(response);
                 console.log(requestOptions.body);
                 if (response.status === 200) {
+                    this.setState({
+                        projectId: "",
+                        title: "",
+                        link: "",
+                        userId: this.props.user._id,
+                        update: false,
+                    })
                     this.props.snackbarShowMessage(`Added Successfully !`);
                 } else {
                     this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
@@ -75,6 +73,51 @@ export class UpdateProjects extends Component {
         console.log("snackbar should be out !! ");
     }
 
+    updateProject(projectId) {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title: this.state.title,
+                link: this.state.link,
+            })
+        };
+        fetch(`http://localhost:5000/projects/update/` + projectId, requestOptions)
+            .then(response => {
+                // console.log(response);
+                console.log(requestOptions.body);
+                if (response.status === 200) {
+                    this.setState({
+                        projectId: "",
+                        title: "",
+                        link: "",
+                        userId: this.props.user._id,
+                        update: false,
+                    })
+                    this.props.snackbarShowMessage(`Updated Successfully !`);
+                } else {
+                    this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
+                }
+            });
+        console.log("snackbar should be out !! ");
+    }
+
+    deleteProject(projectId) {
+        const requestOptions = {
+            method: 'DELETE',
+        };
+        fetch(`http://localhost:5000/projects/delete/` + projectId, requestOptions)
+            .then(response => {
+                // console.log(response);
+                console.log(requestOptions.body);
+                if (response.status === 200) {
+                    this.props.snackbarShowMessage(`Deleted Successfully !`);
+                } else {
+                    this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
+                }
+            });
+        console.log("snackbar should be out !! ");
+    }
 
     getProjects(id) {
         projects = [];
@@ -95,6 +138,7 @@ export class UpdateProjects extends Component {
             .catch(err => this.setState({ user: err }));
     }
 
+
     componentDidMount() {
         // console.log(this.props.user);
         this.getProjects(this.props.user._id);
@@ -104,6 +148,28 @@ export class UpdateProjects extends Component {
 
 
     render() {
+        let button;
+        if (this.state.update === false) {
+            button = <Button
+                className="btn-round"
+                color="success"
+                onClick={(e) => {
+                    e.preventDefault();
+                    this.addProject();
+                }}>
+                Add Project
+    </Button>
+        } else {
+            button = <Button
+                className="btn-round"
+                color="primary"
+                onClick={(e) => {
+                    e.preventDefault();
+                    this.updateProject(this.state.projectId);
+                }}>
+                Update Project
+    </Button>
+        }
         return (
             <div>
                 <div>
@@ -117,6 +183,7 @@ export class UpdateProjects extends Component {
                                     <Input
                                         placeholder="Project title"
                                         type="text"
+                                        value={this.state.title}
                                         onChange={event => {
                                             this.setState({
                                                 title: event.target.value,
@@ -135,6 +202,7 @@ export class UpdateProjects extends Component {
                                     <Input
                                         placeholder="Project Link"
                                         type="text"
+                                        value={this.state.link}
                                         onChange={event => {
                                             this.setState({
                                                 link: event.target.value,
@@ -146,22 +214,43 @@ export class UpdateProjects extends Component {
                         </Row>
                         <Row>
                             <div className="update ml-auto mr-auto">
-                                <Button
-                                    className="btn-round"
-                                    color="success"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        this.AddJob();
-                                    }}>
-                                    Add Job
-                            </Button>
+                                {button}
                             </div>
                         </Row>
                     </Form>
                 </div>
                 {/* <BootstrapTable keyField='id' data={projects} columns={columns} /> */}
-
-
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Project Title</th>
+                            <th>Link</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {projects.map((project) => (
+                            <tr key={project._id}>
+                                <td>{project.title}</td>
+                                <td><a href={project.link} target="_blank">{project.link}</a></td>
+                                <td><Button className="btn-round" color="primary" onClick={(e) => {
+                                    e.preventDefault();
+                                    this.setState({
+                                        projectId: project._id,
+                                        title: project.title,
+                                        link: project.link,
+                                        update: true,
+                                    });
+                                }}>Edit</Button></td>
+                                <td><Button className="btn-round" color="danger" onClick={(e) => {
+                                    e.preventDefault();
+                                    this.deleteProject(project._id);
+                                }}>Delete</Button></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
             </div>
         )
     }

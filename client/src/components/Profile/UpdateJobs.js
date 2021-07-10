@@ -82,6 +82,14 @@ export class UpdateJobs extends Component {
                 // console.log(response);
                 console.log(requestOptions.body);
                 if (response.status === 200) {
+                    this.setState({
+                        jobId: "",
+                        title: "",
+                        company: "",
+                        started: "",
+                        left: "",
+                        update: false,
+                    })
                     this.props.snackbarShowMessage(`Added Successfully !`);
                 } else {
                     this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
@@ -303,7 +311,7 @@ export class UpdateJobs extends Component {
                                         update: true,
                                     });
                                 }}>Edit</Button></td>
-                                <td><Button className="btn-round" color="danger"onClick={(e) => {
+                                <td><Button className="btn-round" color="danger" onClick={(e) => {
                                     e.preventDefault();
                                     this.DeleteJob(job._id);
                                 }}>Delete</Button></td>
