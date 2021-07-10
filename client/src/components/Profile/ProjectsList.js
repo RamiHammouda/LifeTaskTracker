@@ -8,6 +8,8 @@ import {
     Row,
     Col,
 } from "reactstrap";
+import { Container } from "@material-ui/core";
+
 
 import { Link } from 'react-router-dom';
 
@@ -27,31 +29,47 @@ export default class ProjectsList extends Component {
     getProjects(id) {
         // console.log("entered here :) hello boi");
         // console.log("http://192.168.1.17:5000/jobs/" + id)
-        fetch("http://localhost:5000/projects/" + id)
+
+    }
+
+    getUser() {
+        // console.log("entered here :) hello boi");
+        // console.log(`${window.location.href.replace("http://localhost:3000/profile/","").replace("/jobs","")}`);
+        fetch(`http://localhost:5000/users/${window.location.href.replace("http://localhost:3000/profile/", "").replace("/projects", "")}`)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);
-                this.setState({
-                    full: true,
-                })
-                projects = res;
-                // do not delete for some unknown reason this is what makes the code work :) :) :) 
-                console.log("length is " + projects.length());
-                // do not delete for some unknown reason this is what makes the code work :) :) :) 
+                this.setState({ user: res[0] });
+                // console.log("http://localhost:5000/projects/" + res[0]._id);
+                fetch("http://localhost:5000/projects/" + res[0]._id)
+                    .then(res => res.json())
+                    .then(res => {
+                        // console.log(res);
+                        this.setState({
+                            full: true,
+                        })
+                        projects = res;
+                        // do not delete for some unknown reason this is what makes the code work :) :) :) 
+                        console.log("length is " + projects.length());
+                        // do not delete for some unknown reason this is what makes the code work :) :) :) 
+                    })
+                    .catch(err => this.setState({ user: err }));
+                // localStorage.setItem("user", JSON.stringify(res));
             })
             .catch(err => this.setState({ user: err }));
     }
 
     componentDidMount() {
         // console.log(this.props.user);
-        this.getProjects(this.props.user._id);
+        this.getUser();
         // console.log(this.state.jobs);
 
     }
 
     render() {
         return (
-            <div>
+            <Container>
+                <br/>
                 <Card className="card-user">
                     <CardHeader>
                         <CardTitle tag="h5">Personal Projects</CardTitle>
@@ -71,7 +89,7 @@ export default class ProjectsList extends Component {
                                                     </span>
                                                 </Col>
                                                 <Col className="text-right" md="3" xs="3">
-                                                <a
+                                                    <a
                                                         className="btn btn-outline-success btn-round btn-icon"
                                                         // color="primary"
                                                         href={project.link}
@@ -88,11 +106,11 @@ export default class ProjectsList extends Component {
 
                             </Col>
                         </Row>
-                        
+
                         {/* end form here */}
                     </CardBody>
                 </Card>
-            </div>
+            </Container>
         )
     }
 }

@@ -31,7 +31,7 @@ export default class WorkExp extends Component {
         fetch("http://localhost:5000/jobs/" + id)
             .then(res => res.json())
             .then(res => {
-                // console.log(res);
+                console.log(res);
                 this.setState({
                     full: true,
                 })
@@ -78,7 +78,7 @@ export default class WorkExp extends Component {
                             <div className="update ml-auto mr-auto">
                             <Link
                                     className="btn btn-round btn-primary"
-                                    to="/profile/jobs">
+                                    to={`/profile/${window.location.href.replace("http://localhost:3000/profile/","")}/jobs`}>
                                     View All
                                 </Link>
                             </div>

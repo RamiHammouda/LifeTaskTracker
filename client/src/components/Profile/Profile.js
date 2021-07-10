@@ -34,7 +34,7 @@ export default class User extends React.Component {
             if(this.state.user === []){
                 return(<div>User not found</div>);
             }
-            return (<></>);
+            return (<>hai :)</>);
         } else {
 
             return (

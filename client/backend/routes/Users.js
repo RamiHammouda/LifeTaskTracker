@@ -4,7 +4,7 @@ var multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '../public/img/');
+    cb(null, '../public/img/profilePictures');
   },
   filename: function (req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
@@ -53,7 +53,7 @@ router.route('/find').get(async (req, res) => {
 });
 
 // Gets user by ID
-// /users/:id
+// /users/:profileId
 router.route('/:profileId').get(async (req, res) => {
   await User.find({
     profileId: req.params.profileId

@@ -72,11 +72,11 @@ class App extends Component {
                   <Route path="/profile/:profileUrl/update" exact>
                     <UpdateProfile user={JSON.parse(localStorage.getItem("user"))} />
                   </Route>
-                  <Route path="/profile/diplomas" exact component={DiplomasList}/>
-                  <Route path="/profile/projects" exact>
+                  <Route path="/profile/:profileUrl/diplomas" exact component={DiplomasList}/>
+                  <Route path="/profile/:profileUrl/projects" exact>
                     <ProjectsList user={JSON.parse(localStorage.getItem("user"))}/>
                   </Route>
-                  <Route path="/profile/jobs" exact>
+                  <Route path="/profile/:profileUrl/jobs" exact>
                     <JobsList user={JSON.parse(localStorage.getItem("user"))}/>
                   </Route>
                   <Route path="/login">
@@ -97,7 +97,7 @@ class App extends Component {
   }
   getUser() {
     // console.log("entered here :) hello boi");
-    fetch("http://localhost:5000/users/6035037c49f6b243b4357f7a")
+    fetch("http://localhost:5000/users/omar.tb")
       .then(res => res.json())
       .then(res => {
         this.setState({ user: res });

@@ -18,6 +18,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Container } from '@material-ui/core';
 
 
 
@@ -97,7 +98,8 @@ export default class DiplomasList extends Component {
 
     render() {
         return (
-            <div>
+            <Container>
+                <br/>
                 <Card className="card-user">
                     <CardHeader>
                         <CardTitle tag="h5">Certificates</CardTitle>
@@ -122,7 +124,7 @@ export default class DiplomasList extends Component {
                                                     <TableCell component="th" scope="row">
                                                         {/* fix later bellehy la tensa */}
                                                         {/* <img src={require(`assets/img/${row.image}`)} alt={row.image} height="50" width="50" /> */}
-                                                        <img src={require("assets/img/esprit.jpg")} height="50" width="50" alt="henlo" />
+                                                        <img src={"http://localhost:3000/img/esprit.jpg"} height="50" width="50" alt="henlo" />
                                                         {/* {row.image} */}
                                                     </TableCell>
                                                     <TableCell align="left">{row.issuer}</TableCell>
@@ -146,7 +148,7 @@ export default class DiplomasList extends Component {
                         {/* end form here */}
                     </CardBody>
                 </Card>
-            </div>
+            </Container>
         )
     }
 }

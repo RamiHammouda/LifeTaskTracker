@@ -92,7 +92,7 @@ export default class Projects extends Component {
                             <div className="update ml-auto mr-auto">
                                 <Link
                                     className="btn btn-round btn-primary"
-                                    to="/profile/projects">
+                                    to={`/profile/${window.location.href.replace("http://localhost:3000/profile/","")}/projects`}>
                                     View All
                                 </Link>
                             </div>

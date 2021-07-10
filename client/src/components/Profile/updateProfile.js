@@ -84,6 +84,8 @@ import UpdateProjects from "./UpdateProjects";
 import UpdateJobs from "./UpdateJobs";
 import { Container } from "@material-ui/core";
 
+import { Redirect } from 'react-router-dom';
+
 
 
 
@@ -100,12 +102,12 @@ class User extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { user: null };
+        this.state = { user: null, allow: false };
     }
 
     getUser() {
         // console.log("entered here :) hello boi");
-        fetch(`http://localhost:5000/users/${window.location.href.replace("http://localhost:3000/profile/","").replace("/update","")}`)
+        fetch(`http://localhost:5000/users/${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}`)
             .then(res => res.json())
             .then(res => {
                 this.setState({ user: res[0] });
@@ -114,7 +116,25 @@ class User extends React.Component {
             .catch(err => this.setState({ user: err }));
     }
 
-    componentDidMount() { this.getUser(); }
+
+    componentWillMount() {
+        console.log(this.props.user[0].profileId );
+        if (`${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}` != JSON.parse(localStorage.getItem("user"))[0].profileId) {
+            console.log("no no no no ");
+            // this.props.history.pushstate(null,"/");
+        } else {
+            this.setState({
+                allow: true,
+            })
+            console.log(this.state.allow);
+        }
+        this.getUser();
+        // console.log(!window.location.href.includes("/update"));
+        // console.log(this.props.user[0].profileId);
+        // console.log(JSON.parse(localStorage.getItem("user"))[0].profileId);
+        console.log("allow state is: " + this.state.allow);
+        console.log(!window.location.href.includes("/update") && this.props.user[0].profileId != JSON.parse(localStorage.getItem("user"))[0].profileId)
+    }
 
 
     render() {
@@ -124,42 +144,48 @@ class User extends React.Component {
         if (this.state.user == null) {
             return (<div></div>)
         }
-
-        return (
-            <Container> 
-                <br/>
-                <div className="content">
-                    <Row>
-                        {/* Basic user info */}
-                        <Col md="4">
-                            <UserCard user={this.state.user} />
-                            {/* <RecentDiplomas /> */}
-                        </Col>
-                        {/* Edit Profile */}
-                        <Col md="8">
-                            <Card className="card-user">
-                                <CardHeader>
-                                    <CardTitle tag="h5">Update Details</CardTitle>
-                                </CardHeader>
-                                <CardBody>
-                                    <Tabs defaultActiveKey="basicInfo" id="uncontrolled-tab-example">
-                                        <Tab title="Basic Info" eventKey="basicInfo">
-                                            <UpdateFrom  user={this.state.user} />
-                                        </Tab>
-                                        <Tab title="Projects" eventKey="projects">
-                                            <UpdateProjects user={this.state.user}/>
-                                        </Tab>
-                                        <Tab title="Job Experience" eventKey="jobs">
-                                            <UpdateJobs user={this.state.user}/>
-                                        </Tab>
-                                    </Tabs>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                </div>
-            </Container>
-        );
+        // console.log(`${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}`);
+        if (`${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}` != JSON.parse(localStorage.getItem("user"))[0].profileId) {
+            return (
+                <Redirect to="/"/>
+            )
+        } else {
+            return (
+                <Container>
+                    <br />
+                    <div className="content">
+                        <Row>
+                            {/* Basic user info */}
+                            <Col md="4">
+                                <UserCard user={this.state.user} />
+                                {/* <RecentDiplomas /> */}
+                            </Col>
+                            {/* Edit Profile */}
+                            <Col md="8">
+                                <Card className="card-user">
+                                    <CardHeader>
+                                        <CardTitle tag="h5">Update Details</CardTitle>
+                                    </CardHeader>
+                                    <CardBody>
+                                        <Tabs defaultActiveKey="basicInfo" id="uncontrolled-tab-example">
+                                            <Tab title="Basic Info" eventKey="basicInfo">
+                                                <UpdateFrom user={this.state.user} />
+                                            </Tab>
+                                            <Tab title="Projects" eventKey="projects">
+                                                <UpdateProjects user={this.state.user} />
+                                            </Tab>
+                                            <Tab title="Job Experience" eventKey="jobs">
+                                                <UpdateJobs user={this.state.user} />
+                                            </Tab>
+                                        </Tabs>
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </div>
+                </Container>
+            );
+        }
     }
 }
 

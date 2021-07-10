@@ -127,7 +127,7 @@ export default class RecentDiplomas extends Component {
                                                     <TableCell component="th" scope="row">
                                                         {/* fix later bellehy la tensa */}
                                                         {/* <img src={require(`assets/img/${row.image}`)} alt={row.image} height="50" width="50" /> */}
-                                                        <img src={"img/esprit.jpg"} height="50" width="50" alt="henlo" />
+                                                        <img src={"http://localhost:3000/img/esprit.jpg"} height="50" width="50" alt="henlo" />
                                                         {/* {row.image} */}
                                                     </TableCell>
                                                     <TableCell align="left">{row.issuer}</TableCell>
@@ -152,7 +152,7 @@ export default class RecentDiplomas extends Component {
                             <div className="ml-auto mr-auto">
                                 <Link
                                     className="btn btn-round btn-primary"
-                                    to="/profile/diplomas"
+                                    to={`/profile/${window.location.href.replace("http://localhost:3000/profile/","")}/diplomas`}
                                     >
                                     View All
                                 </Link>

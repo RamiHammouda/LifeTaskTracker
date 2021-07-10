@@ -57,20 +57,20 @@ export default class UserCard extends Component {
                                 alt="..."
                                 className="avatar border-gray"
                                 // src={require("assets/img/henlo.png")}
-                                src={`http://localhost:3000/img/${this.props.user.profilePicture}`}
+                                src={`http://localhost:3000/img/profilePictures/${this.props.user.profilePicture}`}
                             />
                             <h5 className="title"><Link to={`/profile/${this.props.user.profileId}`}>{this.props.user.name} {this.props.user.lastName}</Link></h5>
                             {/* <h5 className="title">Alaa Abdelbaki</h5> */}
 
                             <p className="description">{this.props.user.city}, {this.props.user.country}</p>
                         </div>
-                        <br/>
+                        <br />
                         <p className="description text-center">
                             <b>{this.props.user.bio}</b>
                         </p>
                         <Row>
                             <div className="update ml-auto mr-auto">
-                                {!window.location.href.includes("/update") &&
+                                {(!window.location.href.includes("/update") && this.props.user.profileId === JSON.parse(localStorage.getItem("user"))[0].profileId) &&
                                     <Link
                                         to={`/profile/${this.props.user.profileId}/update`}
                                         className="btn btn-primary btn-round"
@@ -85,7 +85,7 @@ export default class UserCard extends Component {
                         <hr />
                         <div className="button-container">
                             <Row>
-                                <Col className="ml-auto" lg="4" md="12" xs="4"> 
+                                <Col className="ml-auto" lg="4" md="12" xs="4">
                                     <h5>
                                         Facebook <br />
                                         <a
@@ -134,4 +134,7 @@ export default class UserCard extends Component {
             </div>
         )
     }
+
+
+    
 }
