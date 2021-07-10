@@ -30,13 +30,13 @@ export default class User extends React.Component {
     render() {
         if (this.state.user == null) {
             this.getUser(this.props.match.params.profileUrl);
-            console.log(this.state.user);
+            // console.log(this.state.user);
             if(this.state.user === []){
                 return(<div>User not found</div>);
             }
             return (<>hai :)</>);
         } else {
-
+            // console.log(this.state.user[0]);
             return (
                 <Fragment>
                     <Header />
@@ -81,7 +81,7 @@ export default class User extends React.Component {
         fetch("http://localhost:5000/users/" + profileId)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                // console.log(res[0]);
                 this.setState({ user: res });
                 // console.log(this.state.user);
                 // localStorage.setItem("user", JSON.stringify(res));

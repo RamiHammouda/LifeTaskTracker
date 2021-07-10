@@ -40,8 +40,13 @@ export default class UserCard extends Component {
     //     window.location.href = 'http://google.com';
     // }
 
+
+    componentWillMount() {
+        // console.log(this.props.user)
+    }
+
     render() {
-        //console.log(this.props.user)
+        console.log(this.props.user)
         return (
             <div>
                 <Card className="card-user">
@@ -85,7 +90,8 @@ export default class UserCard extends Component {
                         <hr />
                         <div className="button-container">
                             <Row>
-                                <Col className="ml-auto" lg="4" md="12" xs="4">
+                                {(this.props.user.facebook!="undefined") && 
+                                    <Col className="ml-auto" lg="4" md="12" xs="4">
                                     <h5>
                                         Facebook <br />
                                         <a
@@ -98,8 +104,9 @@ export default class UserCard extends Component {
                                             <i className="fa fa-facebook" />
                                         </a>
                                     </h5>
-                                </Col>
-                                <Col className="ml-auto" lg="4" md="12" xs="4">
+                                </Col>}
+                                {(this.props.user.linkedin!="undefined") && 
+                                    <Col className="ml-auto" lg="4" md="12" xs="4">
                                     <h5>
                                         Linkedin<br />
                                         <a
@@ -112,8 +119,10 @@ export default class UserCard extends Component {
                                             <i className="fa fa-linkedin" />
                                         </a>
                                     </h5>
-                                </Col>
-                                <Col className="ml-auto" lg="4" md="12" xs="4">
+                                </Col>}
+
+                                {(this.props.user.twitter!="undefined") && 
+                                    <Col className="ml-auto" lg="4" md="12" xs="4">
                                     <h5>
                                         Twitter <br />
                                         <a
@@ -126,7 +135,7 @@ export default class UserCard extends Component {
                                             <i className="fa fa-twitter" />
                                         </a>
                                     </h5>
-                                </Col>
+                                </Col>}
                             </Row>
                         </div>
                     </CardFooter>
@@ -136,5 +145,5 @@ export default class UserCard extends Component {
     }
 
 
-    
+
 }
