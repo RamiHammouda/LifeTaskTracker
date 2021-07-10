@@ -34,6 +34,7 @@ export class UpdateJobs extends Component {
         this.AddJob = this.AddJob.bind(this);
         this.UpdateJob = this.UpdateJob.bind(this);
         this.DeleteJob = this.DeleteJob.bind(this);
+        this.resetFields = this.resetFields.bind(this);
     }
 
     getJobs(id) {
@@ -62,6 +63,17 @@ export class UpdateJobs extends Component {
         this.getJobs(this.props.user._id);
     }
 
+    resetFields() {
+        this.setState({
+            jobId: "",
+            title: "",
+            company: "",
+            started: "",
+            left: "",
+            update: false,
+        })
+    }
+
     AddJob() {
         // console.log("entered here !!");
         // console.log(this.props.user._id);
@@ -82,14 +94,7 @@ export class UpdateJobs extends Component {
                 // console.log(response);
                 console.log(requestOptions.body);
                 if (response.status === 200) {
-                    this.setState({
-                        jobId: "",
-                        title: "",
-                        company: "",
-                        started: "",
-                        left: "",
-                        update: false,
-                    })
+                    this.resetFields();
                     this.props.snackbarShowMessage(`Added Successfully !`);
                 } else {
                     this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
@@ -112,6 +117,7 @@ export class UpdateJobs extends Component {
             .then(response => {
                 if (response.status === 200) {
                     this.props.snackbarShowMessage(`Job deleted successfully !`);
+                    window.location.reload(false); 
                 } else {
                     this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
                 }
@@ -139,14 +145,8 @@ export class UpdateJobs extends Component {
                 // console.log(requestOptions.body);
                 if (response.status === 200) {
                     this.props.snackbarShowMessage(`Updated Successfully !`);
-                    this.setState({
-                        jobId: "",
-                        title: "",
-                        company: "",
-                        started: "",
-                        left: "",
-                        update: false,
-                    })
+                    this.resetFields();
+                    window.location.reload(false); 
                 } else {
                     this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
                 }
@@ -164,19 +164,30 @@ export class UpdateJobs extends Component {
     render() {
         let button;
         if (this.state.update === true) {
-            button = <Button
-                className="btn-round"
-                color="primary"
-                onClick={(e) => {
-                    e.preventDefault();
-                    if (this.state.title === "" || this.state.company === "" || this.state.started === "" || this.state.left === "") {
-                        this.props.snackbarShowMessage(`Some fields are empty please verify !`, "error");
-                    } else {
-                        this.UpdateJob(this.state.jobId);
-                    }
-                }}>
-                Update Job
-    </Button>
+            button = <div>
+                <Button
+                    className="btn-round"
+                    color="primary"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        if (this.state.title === "" || this.state.company === "" || this.state.started === "" || this.state.left === "") {
+                            this.props.snackbarShowMessage(`Some fields are empty please verify !`, "error");
+                        } else {
+                            this.UpdateJob(this.state.jobId);
+                        }
+                    }}>
+                    Update Job
+                </Button>
+                <Button
+                    className="btn-round"
+                    color="danger"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        this.resetFields();
+                    }}>
+                    Cancel
+                </Button>
+            </div>
         } else {
             button = <Button
                 className="btn-round"

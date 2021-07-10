@@ -39,38 +39,48 @@ export class UpdateProjects extends Component {
         this.addProject = this.addProject.bind(this);
         this.updateProject = this.updateProject.bind(this);
         this.deleteProject = this.deleteProject.bind(this);
+        this.resetFields = this.resetFields.bind(this);
     }
 
     addProject() {
         // console.log("entered here !!");
         // console.log(this.props.user._id);
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                title: this.state.title,
-                link: this.state.link,
-                userId: this.state.userId,
-            })
-        };
-        fetch(`http://localhost:5000/projects/add/`, requestOptions)
-            .then(response => {
-                // console.log(response);
-                console.log(requestOptions.body);
-                if (response.status === 200) {
-                    this.setState({
-                        projectId: "",
-                        title: "",
-                        link: "",
-                        userId: this.props.user._id,
-                        update: false,
-                    })
-                    this.props.snackbarShowMessage(`Added Successfully !`);
-                } else {
-                    this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
-                }
-            });
-        console.log("snackbar should be out !! ");
+        if (this.state.title === "" || this.state.title === "" || this.state.link === "") {
+            this.props.snackbarShowMessage(`Some fields are empty !`, "error");
+        } else {
+
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: this.state.title,
+                    link: this.state.link,
+                    userId: this.state.userId,
+                })
+            };
+            fetch(`http://localhost:5000/projects/add/`, requestOptions)
+                .then(response => {
+                    // console.log(response);
+                    console.log(requestOptions.body);
+                    if (response.status === 200) {
+                        this.resetFields();
+                        this.props.snackbarShowMessage(`Added Successfully !`);
+                    } else {
+                        this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
+                    }
+                });
+            console.log("snackbar should be out !! ");
+        }
+    }
+
+    resetFields() {
+        this.setState({
+            projectId: "",
+            title: "",
+            link: "",
+            userId: this.props.user._id,
+            update: false,
+        })
     }
 
     updateProject(projectId) {
@@ -87,14 +97,9 @@ export class UpdateProjects extends Component {
                 // console.log(response);
                 console.log(requestOptions.body);
                 if (response.status === 200) {
-                    this.setState({
-                        projectId: "",
-                        title: "",
-                        link: "",
-                        userId: this.props.user._id,
-                        update: false,
-                    })
+                    this.resetFields();
                     this.props.snackbarShowMessage(`Updated Successfully !`);
+                    window.location.reload(false); 
                 } else {
                     this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
                 }
@@ -112,6 +117,7 @@ export class UpdateProjects extends Component {
                 console.log(requestOptions.body);
                 if (response.status === 200) {
                     this.props.snackbarShowMessage(`Deleted Successfully !`);
+                    window.location.reload(false); 
                 } else {
                     this.props.snackbarShowMessage(`Error ! Please Try again later`, "error");
                 }
@@ -160,15 +166,26 @@ export class UpdateProjects extends Component {
                 Add Project
     </Button>
         } else {
-            button = <Button
-                className="btn-round"
-                color="primary"
-                onClick={(e) => {
-                    e.preventDefault();
-                    this.updateProject(this.state.projectId);
-                }}>
-                Update Project
+            button = <div>
+                <Button
+                    className="btn-round"
+                    color="primary"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        this.updateProject(this.state.projectId);
+                    }}>
+                    Update Project
     </Button>
+                <Button
+                    className="btn-round"
+                    color="danger"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        this.resetFields();
+                    }}>
+                    Cancel
+</Button>
+            </div>
         }
         return (
             <div>
