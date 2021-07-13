@@ -67,7 +67,7 @@ export default class RecentDiplomas extends Component {
             console.log(zz)
             // console.log("this is zz :)");
             // console.log(zz);
-            if (zz['identifiant'] === "13256600") {
+            if (zz['identifiant'] === "05151511") {
                 let y = await this.state.contract.methods.Issuers(index).call();
                 console.log(y)
                 // console.log("success pog");
