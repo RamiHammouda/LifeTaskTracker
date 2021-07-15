@@ -8,14 +8,19 @@ import {
     BrowserRouter as Router,
   } from "react-router-dom";
 
+import DataProvider from './redux/store'
 
 import "./assets/scss/paper-dashboard.scss?v=1.2.0";
 //import "./assets/demo/demo.css";
 
 ReactDOM.render(
+  <React.StrictMode>
+  <DataProvider>
     <Router>
         <App />
-    </Router>,
+    </Router>
+    </DataProvider>
+  </React.StrictMode>,
      document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

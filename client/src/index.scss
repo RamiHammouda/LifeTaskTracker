@@ -3,7 +3,8 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import './assets/scss/utilities/helper.scss';
 @import './assets/scss/style.scss';
-
+/* ----------------- Auth ------------------- */
+@import url("./components/body/auth/auth.css");
 /*
 Google Fonts
 */

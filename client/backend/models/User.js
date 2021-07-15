@@ -21,7 +21,7 @@ const userSchema = new Schema({
     },
     lastName: {
         type: String,
-        required: true
+        required: false
     },
     profilePicture: {
         type:String,

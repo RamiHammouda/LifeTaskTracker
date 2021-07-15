@@ -9,9 +9,7 @@ class Home extends Component{
         return(
             <div className="App">
                 <Fragment>
-                <Header/>
-                <Footer/>
-                <LoginRegister/>
+               
                 </Fragment>
             </div>
         )
