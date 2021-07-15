@@ -1,43 +1,30 @@
-import React, { Component } from 'react'
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Row,
-    Col,
-} from "reactstrap";
-
-import { loadBlockchainData, epochToDate } from "../../utils/helper"
-
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {
+    Card,
+
+    CardBody, CardHeader,
+
+    CardTitle,
+
+    Col, Row
+} from "reactstrap";
+import { epochToDate, loadBlockchainData } from "../../utils/helper";
 
 
 
 
 
-function createData(image, issuer, speciality, session, fullName, birthday, birthPlace, id, nationality, status) {
-    return { image, issuer, speciality, session, fullName, birthday, birthPlace, id, nationality, status };
-}
 
-
-// const rows = [
-//     createData('esprit.jpg', "Esprit", "Systèmes informatiques et Mobiles", "Juin 2021", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 42069, "Tunisian", "success"),
-//     createData('poggers.jpg', "Poggers university", "Poggers", "Juin 2017", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 4269, "Tunisian", "success"),
-//     createData('kekw.jpg', "Top Kek university", "Top Kek", "Juin 2015", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 2069, "Tunisian", "danger"),
-// ];
 
 var rows = [];
-var rowsy = [];
-
 
 
 export default class RecentDiplomas extends Component {
@@ -49,25 +36,24 @@ export default class RecentDiplomas extends Component {
         contract: null,
         account: null,
         rows: null,
-
+        userid:''
     }
 
 
     componentDidMount = async () => {
+        this.setState({userid:this.props.user._id})
         rows=[];
         let data = await loadBlockchainData();
         this.setState({ account: (data).accounts[0], web3: (data).web3, contract: (data).instance });
 
-        this.setState({ hash: "10" });
         let size = await this.state.contract.methods.totalCertificates().call();
-        // console.log(this.state.hash);
 
         for (let index = 0; index <= size -1 ; index++) {
             let zz = await this.state.contract.methods.Certificates(index).call();
             console.log(zz)
             // console.log("this is zz :)");
             // console.log(zz);
-            if (zz['identifiant'] === "05151511") {
+            if (zz['userid'] === this.props.user._id) {
                 let y = await this.state.contract.methods.Issuers(index).call();
                 console.log(y)
                 // console.log("success pog");
@@ -133,12 +119,12 @@ export default class RecentDiplomas extends Component {
                                                     <TableCell align="left">{row.issuer}</TableCell>
                                                     <TableCell align="left">{row.specialite}</TableCell>
                                                     <TableCell align="left">
-                                                        <a
-                                                            className="btn btn-round btn-success"
-                                                            href={`http://localhost:3000/view/${this.state.certId}`}
-                                                            type="submit">
-                                                            View Certificate
-                                                        </a>
+                                                        <Link className="btn btn-round btn-success" to={{
+                                                            pathname:"/view/",
+                                                            state:{params:{id:this.state.certId}}
+                                                        }}>
+                                                        View Certificate
+                                                        </Link>
                                                     </TableCell>
                                                 </TableRow>
                                             ))}
@@ -150,12 +136,12 @@ export default class RecentDiplomas extends Component {
                         <br />
                         <Row>
                             <div className="ml-auto mr-auto">
-                                <Link
-                                    className="btn btn-round btn-primary"
-                                    to={`/profile/${window.location.href.replace("http://localhost:3000/profile/","")}/diplomas`}
-                                    >
-                                    View All
-                                </Link>
+                                <Link className="btn btn-round btn-primary" to={{
+                                                            pathname:`/profile/${window.location.href.replace("http://localhost:3000/profile/","")}/diplomas`,
+                                                            state:{params:{id:this.state.userid}}
+                                                        }}>
+                                                        View All
+                                                        </Link>
                             </div>
                         </Row>
                         {/* end form here */}

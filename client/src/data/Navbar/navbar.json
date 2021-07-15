@@ -1,27 +1,4 @@
 [
-  {
-    "id": 1,
-    "title": "Home",
-    "link": "/",
-    "megaMenu": false,
-    "subMenu": [
-      {
-        "id": 1.1,
-        "title": "Home 01",
-        "link": "/home-one"
-      },
-      {
-        "id": 1.2,
-        "title": "Home 02",
-        "link": "/home-two"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "title": "Profile",
-    "link": "/Profile",
-    "megaMenu": false,
-    "subMenu": false
-  }
+  
+  
 ]

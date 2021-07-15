@@ -1,19 +1,21 @@
-import React, { Component } from 'react'
+import axios from "axios";
+import React, { Component } from 'react';
+// import countrySelect from "./input.select.country";
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import {
     Button,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col,
-} from "reactstrap";
 
+
+
+
+    Col, Form, FormGroup,
+
+    Input,
+    Row
+} from "reactstrap";
 // import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 import { withSnackbar } from "../Snackbar";
-import axios from "axios";
-// import countrySelect from "./input.select.country";
 
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 class UpdateFrom extends Component {
 
@@ -47,24 +49,23 @@ class UpdateFrom extends Component {
     }
 
     updateProfile() {
-        console.log(this.state.profilePicture);
-        const formData = new FormData();
-        formData.append("profilePicture", this.state.profilePicture);
-        formData.append("email", this.state.email);
-        formData.append("password", this.state.password);
-        formData.append("name", this.state.name);
-        formData.append("lastName", this.state.lastName);
-        formData.append("address", this.state.address);
-        formData.append("city", this.state.city);
-        formData.append("country", this.state.country);
-        formData.append("bio", this.state.bio);
-        formData.append("profileId", this.state.profileId);
-        formData.append("facebook", this.state.facebook);
-        formData.append("twitter", this.state.twitter);
-        formData.append("linkedin", this.state.linkedin);
 
-        axios.post(`http://localhost:5000/users/update/${this.props.user._id}`, formData).then(res => {
-            if (res.status == 200) {
+        axios.post(`http://localhost:5000/user/update/${this.props.user._id}`, {
+            profilePicture: this.state.profilePicture,
+            email: this.state.email,
+            password: this.state.password,
+            name: this.state.name,
+            lastName: this.state.lastName,
+            address: this.state.address,
+            city: this.state.city,
+            country: this.state.country,
+            bio: this.state.bio,
+            profileId: this.state.profileId,
+            facebook: this.state.facebook,
+            twitter: this.state.twitter,
+            linkedin: this.state.linkedin
+        }).then(res => {
+            if (res.status === 200) {
                 this.props.snackbarShowMessage(`Updated Successfully !`);
             }
         }).catch(err => {
@@ -89,6 +90,7 @@ class UpdateFrom extends Component {
                                     Email address
                                 </label>
                                 <Input
+                                    name="email"
                                     placeholder="Email"
                                     type="email"
                                     defaultValue={this.state.email}
@@ -144,6 +146,7 @@ class UpdateFrom extends Component {
                                     accept="image/*"
                                     onChange={event => {
                                         const file = event.target.files[0];
+                                        console.log(file)
                                         this.setState({
                                             profilePicture: file,
                                         })

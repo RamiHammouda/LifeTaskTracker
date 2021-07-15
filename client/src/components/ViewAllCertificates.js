@@ -1,23 +1,20 @@
-import React, { Component } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from 'react';
+import { Container } from "react-bootstrap";
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { Link } from 'react-router-dom';
 import { epochToDate, loadBlockchainData } from '../utils/helper';
 
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
-import { Container } from "react-bootstrap";
-import Header from '../components/HeaderAdmin'
-import Footer from "../components/Footer";
-import LoginRegister from "../components/LoginRegister";
-import Loader from "react-loader-spinner";
 
 
 
-import BootstrapTable from 'react-bootstrap-table-next';
-import { Link } from 'react-router-dom';
+
 const { SearchBar } = Search;
 
 export default class ViewAllCertificates extends Component {
@@ -40,12 +37,26 @@ export default class ViewAllCertificates extends Component {
   expandRow = {
     renderer: (row, rowIndex) => (
       <div className="btn-toolbar ">
-        <a href={`/view/${row.id}`} className="btn btn-success mr-3">View</a>
-        <a href={`/update/${row.id}`} className="btn btn-warning mr-3">Update</a>
-        <a href={`/delete/${row.id}`} className="btn btn-danger">Delete</a>
-        {/* <Link to={{pathname:"/delete",state:{
-          id:row.id
-        }}}>Delete</Link> */}
+        <Link className="btn btn-round btn-success mr-3" to={{
+            pathname:"/view/",
+            state:{params:{id:row.id}}
+        }}>
+        View
+        </Link>
+
+        <Link className="btn btn-round btn-warning mr-3" to={{
+            pathname:"/update/",
+            state:{params:{id:row.id}}
+        }}>
+        Update
+        </Link>
+
+        <Link className="btn btn-round btn-danger" to={{
+            pathname:"/delete/",
+            state:{params:{id:row.id}}
+        }}>
+        Delete
+        </Link>
       </div>
     )
   };
@@ -140,7 +151,6 @@ export default class ViewAllCertificates extends Component {
       
       return (
         <div>
-          <Header />
           <Container style={{ height: '100vh' }}>
             <ToolkitProvider
               bootstrap4={true}
@@ -169,8 +179,7 @@ export default class ViewAllCertificates extends Component {
               }
             </ToolkitProvider>
           </Container>
-          <Footer />
-          <LoginRegister />
+
 
         </div>
       )

@@ -1,18 +1,21 @@
-import { withSnackbar } from 'components/Snackbar';
-import React, { Component } from 'react'
-
-
-
-
+import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
 import {
     Button,
-    FormGroup,
-    Form,
+
+
+
+
+    Col, Form, FormGroup,
+
     Input,
-    Row,
-    Col,
+    Row
 } from "reactstrap";
-import { Table } from 'react-bootstrap';
+import { withSnackbar } from '../../components/Snackbar';
+
+
+
+
 
 var jobs = [];
 

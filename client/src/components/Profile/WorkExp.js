@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-    Button,
     Card,
-    CardHeader,
-    CardBody,
+
+    CardBody, CardHeader,
+
     CardTitle,
-    Row,
-    Col,
+
+    Col, Row
 } from "reactstrap";
 
 
@@ -44,13 +44,19 @@ export default class WorkExp extends Component {
     }
 
     componentDidMount() {
-        // console.log(this.props.user);
+        
         this.getJobs(this.props.user._id);
         // console.log(this.state.jobs);
 
     }
 
     render() {
+        console.log(this.props.user);
+        if(this.props.user==null)
+            <div>
+
+            </div>
+            else{
         return (
             <div>
                 <Card className="card-user">
@@ -61,7 +67,7 @@ export default class WorkExp extends Component {
                         {/* Add form here if u wanted to add idk */}
                         <Row>
                             <Col sm="12">
-                                {jobs.splice(0,3).map((job) => (
+                                {jobs.map((job) => (
                                     <ul className="list-unstyled team-members" key={job._id}>
                                         <li>
                                             {job.title} <br />
@@ -88,6 +94,6 @@ export default class WorkExp extends Component {
                     </CardBody>
                 </Card>
             </div>
-        )
+        )}
     }
 }

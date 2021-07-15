@@ -1,90 +1,23 @@
-// import React, { Component } from 'react'
-// import { Button } from '../Button';
-// import "./Profile.css";
-
-// export default class Profile extends Component {
-//     render() {
-//         return (
-//             <div className="container profile">
-//                 <div className="row">
-//                     <div className="col-12 col-md-3">
-//                         <div className="row">
-//                             <div className="col-12 d-flex justify-content-center">
-//                                 <img src={window.location.origin + '/download.jpg'} alt="Profile Picture"></img>
-//                             </div>
-//                         </div>
-//                         <div className="container user-info">
-//                             <div className="row">
-//                                 <div className="col-12">
-//                                     <h4>{this.props.user.name}</h4>
-//                                 </div>
-//                                 <div className="col-12">
-//                                     <h4>{this.props.user.lastName}</h4>
-//                                 </div>
-//                                 <div className="col-12">
-//                                     <h4>{this.props.user.email}</h4>
-//                                 </div>
-//                                 <div className="col-12">
-//                                     <h4>Esprit</h4>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                     <div className="col-12 col-md-9">
-//                         <div className="container profile-feed">
-//                             <div className="row">
-//                                 <div className="col-12">
-//                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis aliquam quod doloremque magni architecto minus. Assumenda pariatur, dicta dolore porro, quasi nam ea consectetur excepturi laborum modi ut obcaecati cumque!
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
-
-
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
+import { Container } from "@material-ui/core";
 import React from "react";
-
+import { Tab, Tabs } from "react-bootstrap";
 // reactstrap components
 import {
     Card,
-    CardHeader,
-    CardBody,
+
+    CardBody, CardHeader,
+
     CardTitle,
-    Row,
-    Col,
+
+    Col, Row
 } from "reactstrap";
-
-import RecentDiplomas from "./RecentDiplomas";
-import UserCard from "./UserCard";
 import UpdateFrom from "./UpdateFrom";
-import { Tabs, Tab } from "react-bootstrap";
-import UpdateProjects from "./UpdateProjects";
 import UpdateJobs from "./UpdateJobs";
-import { Container } from "@material-ui/core";
+import UpdateProjects from "./UpdateProjects";
+import UserCard from "./UserCard";
 
-import { Redirect } from 'react-router-dom';
+
+
 
 
 
@@ -107,7 +40,7 @@ class User extends React.Component {
 
     getUser() {
         // console.log("entered here :) hello boi");
-        fetch(`http://localhost:5000/users/${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}`)
+        fetch(`http://localhost:5000/user/${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}`)
             .then(res => res.json())
             .then(res => {
                 this.setState({ user: res[0] });
@@ -117,39 +50,21 @@ class User extends React.Component {
     }
 
 
-    componentWillMount() {
-        // console.log(this.props.user[0].profileId );
-        if (`${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}` != JSON.parse(localStorage.getItem("user"))[0].profileId) {
-            // console.log("no no no no ");
-            // this.props.history.pushstate(null,"/");
-        } else {
-            this.setState({
-                allow: true,
-            })
-            // console.log(this.state.allow);
-        }
+    componentDidMount() {
+
         this.getUser();
-        // console.log(!window.location.href.includes("/update"));
-        // console.log(this.props.user[0].profileId);
-        // console.log(JSON.parse(localStorage.getItem("user"))[0].profileId);
-        // console.log("allow state is: " + this.state.allow);
-        // console.log(!window.location.href.includes("/update") && this.props.user[0].profileId != JSON.parse(localStorage.getItem("user"))[0].profileId)
     }
 
 
     render() {
-
+        console.log(this.state.user)
+        
         // const classes = useStyles();
 
         if (this.state.user == null) {
             return (<div></div>)
         }
-        // console.log(`${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}`);
-        if (`${window.location.href.replace("http://localhost:3000/profile/", "").replace("/update", "")}` != JSON.parse(localStorage.getItem("user"))[0].profileId) {
-            return (
-                <Redirect to="/"/>
-            )
-        } else {
+        
             return (
                 <Container>
                     <br />
@@ -157,7 +72,7 @@ class User extends React.Component {
                         <Row>
                             {/* Basic user info */}
                             <Col md="4">
-                                <UserCard user={this.state.user} />
+                                <UserCard user={this.props.user} profile={this.state.user} />
                                 {/* <RecentDiplomas /> */}
                             </Col>
                             {/* Edit Profile */}
@@ -169,13 +84,13 @@ class User extends React.Component {
                                     <CardBody>
                                         <Tabs defaultActiveKey="basicInfo" id="uncontrolled-tab-example">
                                             <Tab title="Basic Info" eventKey="basicInfo">
-                                                <UpdateFrom user={this.state.user} />
+                                                <UpdateFrom user={this.props.user} />
                                             </Tab>
                                             <Tab title="Projects" eventKey="projects">
-                                                <UpdateProjects user={this.state.user} />
+                                                <UpdateProjects user={this.props.user} />
                                             </Tab>
                                             <Tab title="Job Experience" eventKey="jobs">
-                                                <UpdateJobs user={this.state.user} />
+                                                <UpdateJobs user={this.props.user} />
                                             </Tab>
                                         </Tabs>
                                     </CardBody>
@@ -185,7 +100,7 @@ class User extends React.Component {
                     </div>
                 </Container>
             );
-        }
+        
     }
 }
 

@@ -1,42 +1,32 @@
-import React, { Component } from 'react'
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Row,
-    Col,
-} from "reactstrap";
-
-import { loadBlockchainData, epochToDate } from "../../utils/helper"
-
+import { Container } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { Container } from '@material-ui/core';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import {
+    Card,
+
+    CardBody, CardHeader,
+
+    CardTitle,
+
+    Col, Row
+} from "reactstrap";
+import { epochToDate, loadBlockchainData } from "../../utils/helper";
 
 
 
 
 
-function createData(image, issuer, speciality, session, fullName, birthday, birthPlace, id, nationality, status) {
-    return { image, issuer, speciality, session, fullName, birthday, birthPlace, id, nationality, status };
-}
 
 
-// const rows = [
-//     createData('esprit.jpg', "Esprit", "Systèmes informatiques et Mobiles", "Juin 2021", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 42069, "Tunisian", "success"),
-//     createData('poggers.jpg', "Poggers university", "Poggers", "Juin 2017", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 4269, "Tunisian", "success"),
-//     createData('kekw.jpg', "Top Kek university", "Top Kek", "Juin 2015", "Alaa Abdelbaki", "22 Juin 1998", "Gabes", 2069, "Tunisian", "danger"),
-// ];
 
 var rows = [];
-var rowsy = [];
 
 
 
@@ -49,44 +39,43 @@ export default class DiplomasList extends Component {
         contract: null,
         account: null,
         rows: null,
+        userid:''
 
     }
 
 
     componentDidMount = async () => {
+        this.setState({userid:this.props.location.state.params.id})
         rows=[];
         let data = await loadBlockchainData();
         this.setState({ account: (data).accounts[0], web3: (data).web3, contract: (data).instance });
 
         this.setState({ hash: "10" });
         // console.log(this.state.hash);
-
-        for (let index = 0; index <= this.state.hash; index++) {
-            let zz = await this.state.contract.methods.Certificates(index).call();
-
-            // console.log("this is zz :)");
-            // console.log(zz);
-            if (zz['identifiant'] === "13256600") {
-                let y = await this.state.contract.methods.getIssuer(index).call();
-                // console.log("success pog");
-                // console.log(y);
+        let size = await this.state.contract.methods.totalCertificates().call();
+        
+        for (let index = 0; index <= size-1; index++) {
+           
+            let y = await this.state.contract.methods.getIssuer(index).call();
+            let certs = await this.state.contract.methods.Certificates(index).call();
+            
+            if (certs['userid'] === this.state.userid) {
                 let certificate = {
-                    "nom": zz[2],
-                    "specialite": zz[0],
-                    "session": zz[1],
-                    "dateNaissance": epochToDate(zz[3]),
-                    "lieuNaissance": zz[4],
-                    "nationalite": zz[6],
-                    "cin_passport": zz[5],
-                    "dateRealisation": epochToDate(y[2]),
-                    "numeroDiplome": y[3],
+                    "nom": certs['Nom'],
+                    "specialite": certs['Specialite'],
+                    "session": certs['Session'],
+                    "dateNaissance": epochToDate(certs['dateNaissance']),
+                    "lieuNaissance": certs['lieuNaissance'],
+                    "nationalite": certs['Nationalite'],
+                    "cin_passport": certs['identifiant'],
+                    "dateRealisation": epochToDate(y['dateRealisation']),
+                    "numeroDiplome": y['numCertificat'],
                     "issuer" : y[1],
-                    "certId" : y[3],
+                    "certId" : certs['id'],
                 }
                 rows.push(certificate);
-                // console.log(zz);
             } else {
-                // console.log("fail :(");
+                
             }
 
         }
@@ -97,6 +86,7 @@ export default class DiplomasList extends Component {
 
 
     render() {
+        
         return (
             <Container>
                 <br/>
@@ -130,12 +120,12 @@ export default class DiplomasList extends Component {
                                                     <TableCell align="left">{row.issuer}</TableCell>
                                                     <TableCell align="left">{row.specialite}</TableCell>
                                                     <TableCell align="left">
-                                                        <a
-                                                            className="btn btn-round btn-success"
-                                                            href={`http://localhost:3000/view/${index}`}
-                                                            type="submit">
-                                                            View Certificate
-                                                        </a>
+                                                    <Link className="btn btn-round btn-success" to={{
+                                                            pathname:"/view/",
+                                                            state:{params:{id:row.certId}}
+                                                        }}>
+                                                        View Certificate
+                                                        </Link>
                                                     </TableCell>
                                                 </TableRow>
                                             ))}

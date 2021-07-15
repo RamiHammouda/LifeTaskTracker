@@ -1,12 +1,12 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Card,
     CardBody,
     CardFooter,
-    Row,
-    Col,
+
+    Col, Row
 } from "reactstrap";
-import React, { Component } from 'react'
-import { Link, useLocation } from 'react-router-dom';
 
 
 // const baseUrl = "assets/img/";
@@ -15,38 +15,17 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default class UserCard extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     // this.goToSocial = this.goToSocial.bind(this);
-    //     image = baseUrl+this.props.user.profilePicture;
-    //   }
+    state = {
+        profile:''
+    }
 
 
-    //   goToSocial(social) {
-    //     preventDefault();
-    //     switch (social) {
-    //         case "facebook":
-    //             window.location.href = 'http://www.facebook.com/'+this.props.user.facebook;
-    //             break;
-    //         case "twitter":
-    //             window.location.href = 'http://www.twitter.com/'+this.props.user.twitter;
-    //             break;
-    //         case "linkedin":
-    //             window.location.href = 'http://www.linkedin.com/'+this.props.user.linkedin;
-    //             break;
-    //         default:
-    //             window.location.href = 'http://www.google.com/'+link;
-    //     }
-    //     window.location.href = 'http://google.com';
-    // }
-
-
-    componentWillMount() {
-        // console.log(this.props.user)
+    componentDidMount() {
+        this.setState({profile:this.props.profile})
     }
 
     render() {
-        // console.log(this.props.user)
+
         return (
             <div>
                 <Card className="card-user">
@@ -57,27 +36,30 @@ export default class UserCard extends Component {
                         />
                     </div>
                     <CardBody>
+                    <center>
                         <div className="author">
+                            
                             <img
                                 alt="..."
-                                className="avatar border-gray"
+                                className="avatar border-gray profile-img"
                                 // src={require("assets/img/henlo.png")}
-                                src={`http://localhost:3000/img/profilePictures/${this.props.user.profilePicture}`}
-                            />
-                            <h5 className="title"><Link to={`/profile/${this.props.user.profileId}`}>{this.props.user.name} {this.props.user.lastName}</Link></h5>
-                            {/* <h5 className="title">Alaa Abdelbaki</h5> */}
+                                src={`http://localhost:3000/img/profilePictures/${this.props.profile.profilePicture}`}
+                            /><br/><br/>
+                            <h5 className="title"><Link to={`/profile/${this.props.profile.profileId}`}>{this.props.profile.name}</Link></h5>
+                           
 
-                            <p className="description">{this.props.user.city}, {this.props.user.country}</p>
+                            <p className="description">{this.props.profile.city}, {this.props.profile.country}</p>
                         </div>
+                        </center>
                         <br />
                         <p className="description text-center">
-                            <b>{this.props.user.bio}</b>
+                            <b>{this.props.profile.bio}</b>
                         </p>
-                        <Row>
-                            <div className="update ml-auto mr-auto">
-                                {(!window.location.href.includes("/update") && this.props.user.profileId === JSON.parse(localStorage.getItem("user"))[0].profileId) &&
+                          <Row>
+                                <div className="update ml-auto mr-auto">
+                                {(!window.location.href.includes("/update") && this.props.user!=null && this.props.profile.profileId === this.props.user.profileId) &&
                                     <Link
-                                        to={`/profile/${this.props.user.profileId}/update`}
+                                        to={`/profile/${this.props.profile.profileId}/update`}
                                         className="btn btn-primary btn-round"
                                         type="submit">
                                         Update Profile
@@ -90,14 +72,14 @@ export default class UserCard extends Component {
                         <hr />
                         <div className="button-container">
                             <Row>
-                                {(this.props.user.facebook!="undefined") && 
+                                {(this.props.profile.facebook!=="undefined") && 
                                     <Col className="ml-auto" lg="4" md="12" xs="4">
                                     <h5>
                                         Facebook <br />
                                         <a
                                             className="btn btn-outline-primary btn-round btn-icon"
                                             // color="primary"
-                                            href={"https://www.facebook.com/" + this.props.user.facebook}
+                                            href={"https://www.facebook.com/" + this.props.profile.facebook}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             size="md">
@@ -105,7 +87,7 @@ export default class UserCard extends Component {
                                         </a>
                                     </h5>
                                 </Col>}
-                                {(this.props.user.linkedin!="undefined") && 
+                                {(this.props.profile.linkedin!=="undefined") && 
                                     <Col className="ml-auto" lg="4" md="12" xs="4">
                                     <h5>
                                         Linkedin<br />
@@ -114,14 +96,14 @@ export default class UserCard extends Component {
                                             color="primary"
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            href={"https://www.linkedin.com/in/" + this.props.user.linkedin}
+                                            href={"https://www.linkedin.com/in/" + this.props.profile.linkedin}
                                             size="md">
                                             <i className="fa fa-linkedin" />
                                         </a>
                                     </h5>
                                 </Col>}
 
-                                {(this.props.user.twitter!="undefined") && 
+                                {(this.props.profile.twitter!=="undefined") && 
                                     <Col className="ml-auto" lg="4" md="12" xs="4">
                                     <h5>
                                         Twitter <br />
@@ -130,7 +112,7 @@ export default class UserCard extends Component {
                                             color="primary"
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            href={"https://www.twitter.com/" + this.props.user.twitter}
+                                            href={"https://www.twitter.com/" + this.props.profile.twitter}
                                             size="md">
                                             <i className="fa fa-twitter" />
                                         </a>

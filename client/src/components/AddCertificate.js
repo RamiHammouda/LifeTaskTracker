@@ -1,21 +1,16 @@
-import React,{ Component } from "react";
-import { Form,Button, FormGroup,Spinner,Container, Row, Col } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from "react";
+import { Button, Col, Container, Form, FormGroup, Row, Spinner } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
+import { dateToEpoch, loadBlockchainData } from "../utils/helper.js";
 
 
-import { loadBlockchainData,dateToEpoch } from "../utils/helper.js";
-import { Redirect } from "react-router-dom";
 
-import Header from '../components/HeaderAdmin'
-import Footer from "../components/Footer";
-import LoginRegister from "../components/LoginRegister";
-import {
-    BrowserRouter as Router,
-  } from "react-router-dom";
+
+
 
 class AddCertificate extends Component{
 
@@ -39,15 +34,17 @@ class AddCertificate extends Component{
         contract: null, 
         account:null,
         redirect:false,
-        id:null
+        id:null,
+        userid:''
 
     }
 
     
 
     componentDidMount = async () => {
+        
           let data = loadBlockchainData();
-          this.setState({ account: (await data).accounts[0],web3: (await data).web3,contract: (await data).instance });
+          this.setState({ account: (await data).accounts[0],web3: (await data).web3,contract: (await data).instance,userid:this.props.user._id });
 
     }
 
@@ -70,7 +67,8 @@ class AddCertificate extends Component{
                 this.state.cin_passport,
                 this.state.nationalite,
                 dateToEpoch(this.state.dateRealisation),
-                this.state.numeroDiplome)
+                this.state.numeroDiplome,
+                this.state.userid)
                 .send({ from: this.state.account });
 
                 this.setState({
@@ -82,9 +80,6 @@ class AddCertificate extends Component{
                       this.setState({redirect:true})
                   }
 
-                 
-             
-          
         }catch(error){
             this.setState({redirect:true})
             console.log(error)
@@ -104,14 +99,14 @@ class AddCertificate extends Component{
         if(this.state.redirect===true){
             return(
                 <Router>
-            <Redirect from="/add" to={`/view/${this.state.id}`} />
+            <Redirect from="/add" to={`/viewAll`} />
             </Router>
             )
         }else{
         return(
             
             <div className="App">
-                <Header/>
+        
 
                 <Container className="container-fluid">
 
@@ -203,12 +198,6 @@ class AddCertificate extends Component{
                     </Col>
                     </Row>
                 </Container>
-
-
-
-                <Footer/>
-                <LoginRegister/>
-                
             </div>
         )}
     }

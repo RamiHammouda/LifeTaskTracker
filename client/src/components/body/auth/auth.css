@@ -93,3 +93,41 @@
     letter-spacing: 1.3px;
     box-shadow: 0 2px 4px #777;
 }
+
+header ul li img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+/* --------- Dropdown ---------- */
+.drop-nav{
+    position: relative;
+    padding: 10px 0;
+}
+.drop-nav a{
+    text-transform: capitalize;
+    overflow: hidden;
+    color: indigo;
+    text-decoration-color: indigo;
+}
+.drop-nav .dropdown{
+    position: absolute;
+    background: #080b1a;
+    width: 100%;
+    width: calc(100% + 100px);
+    top: 50px;
+    display: none;
+}
+
+.drop-nav .dropdown li{
+    display: contents; 
+    padding: 1%;
+    margin: auto;
+    color: indigo;
+    text-decoration-color: indigo;
+}
+
+.drop-nav:hover .dropdown{
+    display: contents;
+}

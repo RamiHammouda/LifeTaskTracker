@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { loadBlockchainData } from '../utils/helper';
-import { Link, Redirect } from "react-router-dom";
-import Loader from "react-loader-spinner";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from 'react';
+import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { Link } from "react-router-dom";
+import { loadBlockchainData } from '../utils/helper';
 
 
 export default class DeleteCertificate extends Component {
@@ -18,13 +18,11 @@ export default class DeleteCertificate extends Component {
     }
     
     componentDidMount =  async () => {
-        const { match: { params } } = this.props;
-        this.setState({hash: params.id})
+        this.setState({hash: this.props.location.state.params.id})
 
-        //const { id } = this.props.location.state
         let data = await loadBlockchainData();
           this.setState({ account: (await data).accounts[0],web3: (await data).web3,contract: (await data).instance });
-        let del = await this.state.contract.methods.deleteCertificate(this.state.hash).send({ from: this.state.account });
+        await this.state.contract.methods.deleteCertificate(this.state.hash).send({ from: this.state.account });
 
         this.setState({loading:true})
     }
@@ -38,7 +36,7 @@ export default class DeleteCertificate extends Component {
                 <div>
                     <center>
                     Certificate Updated ....
-                    <Link to="/view" target="_parent" rel="noopener noreferrer">Go to View all</Link>
+                    <Link to="/viewAll" target="_parent" rel="noopener noreferrer">Go to View all</Link>
                     </center>
                 </div>
             )

@@ -17,7 +17,7 @@
       },
       {
         "title": "View Certificates",
-        "link": "/view"
+        "link": "/viewAll"
       }
     ]
   },
@@ -28,12 +28,8 @@
     "megaMenu": false,
     "subMenu": [
       {
-        "title":"Add user",
-        "link":"/addUser"
-      },
-      {
         "title":"List Users",
-        "link":"/listUsers"
+        "link":"/users"
       }
     ]
   }

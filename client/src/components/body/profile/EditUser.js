@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react'
-import {useParams, useHistory} from 'react-router-dom'
-import {useSelector} from 'react-redux'
 import axios from 'axios'
-import {showSuccessMsg, showErrMsg} from '../../utils/notification/Notification'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
+import { showErrMsg, showSuccessMsg } from '../../utils/notification/Notification'
 
 
 function EditUser() {
@@ -57,12 +57,8 @@ function EditUser() {
 
     return (
         <div className="profile_page edit_user">
-            <div className="row">
-                <button onClick={() => history.goBack()} className="go_back">
-                    <i className="fas fa-long-arrow-alt-left"></i> Go Back
-                </button>
-            </div>
-
+           
+<div className="row"></div>
             <div className="col-left">
                 <h2>Edit User</h2>
 
@@ -82,7 +78,13 @@ function EditUser() {
                     <label htmlFor="isAdmin">isAdmin</label>
                 </div>
 
-                <button onClick={handleUpdate}>Update</button>
+                <div className="row">
+                <button className="btn btn-success" onClick={handleUpdate}>Update</button>
+                <button onClick={() => history.goBack()} className="go_back">
+                    <i className="fas fa-long-arrow-alt-left"></i> Go Back
+                </button>
+                </div>
+                
 
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}

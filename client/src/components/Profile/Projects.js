@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
-    Button,
     Card,
-    CardHeader,
-    CardBody,
+
+    CardBody, CardHeader,
+
     CardTitle,
-    Row,
-    Col,
+
+    Col, Row
 } from "reactstrap";
 
-import { Link } from 'react-router-dom';
 
 
 var projects = []
@@ -61,7 +61,7 @@ export default class Projects extends Component {
                         <Row>
                             <Col sm="12">
                                 <ul className="list-unstyled team-members">
-                                    {projects.splice(0, 3).map((project) => (
+                                    {projects.map((project) => (
                                         <li key={project._id}>
                                             <Row>
                                                 <Col md="9" xs="9">

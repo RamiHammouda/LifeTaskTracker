@@ -1,16 +1,13 @@
-import React, { Component } from 'react'
-import { Form,Button, FormGroup, Container } from "react-bootstrap";
-import Header from '../components/HeaderAdmin'
-import Footer from "../components/Footer";
-import LoginRegister from "../components/LoginRegister";
-import { epochToDate,dateToEpoch, loadBlockchainData } from '../utils/helper';
-import { Redirect } from "react-router-dom";
-
-
-import Loader from "react-loader-spinner";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import React, { Component } from 'react';
+import { Button, Container, Form, FormGroup } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { Redirect } from "react-router-dom";
+import { dateToEpoch, epochToDate, loadBlockchainData } from '../utils/helper';
+
+
 
 export default class UpdateCertificate extends Component {
     state={
@@ -31,28 +28,28 @@ export default class UpdateCertificate extends Component {
         redirect:false,
         txnHash: 0,
         blockWitnessed: 0,
+        userid:''
     }
 
     componentDidMount =  async () => {
-        const { match: { params } } = this.props;
-        this.setState({hash: params.id})
+        this.setState({hash: this.props.location.state.params.id})
+        console.log(this.state.hash)
         let data = await loadBlockchainData();
-          this.setState({ account: (await data).accounts[0],web3: (await data).web3,contract: (await data).instance });
+          this.setState({ account: (await data).accounts[0],web3: (await data).web3,contract: (await data).instance,userid:this.props.user._id });
 
 
-          let c = await this.state.contract.methods.getCertificate(this.state.hash).call();
-          let y = await this.state.contract.methods.getIssuer(this.state.hash).call();
+          let zz = await this.state.contract.methods.Certificates(this.state.hash).call();
 
           this.setState({
-            nom: c[2],
-            specialite: c[0],
-            session: c[1],
-            dateNaissance: epochToDate(c[3]),
-            lieuNaissance: c[4],
-            nationalite:c[6],
-            cin_passport: c[5],
-            dateRealisation: epochToDate(y[2]),
-            numeroDiplome: y[3],
+            nom: zz[3],
+            specialite: zz[1],
+            session: zz[2],
+            dateNaissance: epochToDate(zz[4]),
+            lieuNaissance: zz[5],
+            nationalite:zz[7],
+            cin_passport: zz[6],
+            dateRealisation: epochToDate(zz[10]),
+            numeroDiplome: zz[9],
         })
 
         this.setState({loading:true})
@@ -72,7 +69,8 @@ export default class UpdateCertificate extends Component {
                 this.state.cin_passport,
                 this.state.nationalite,
                 dateToEpoch(new Date(this.state.dateRealisation)),
-                this.state.numeroDiplome
+                this.state.numeroDiplome,
+                this.state.userid
         ).send({ from: this.state.account });
 
         this.setState({
@@ -89,14 +87,13 @@ export default class UpdateCertificate extends Component {
         console.log(this.state)
         if(this.state.redirect){
             return(
-                <Redirect to={`/view`} />
+                <Redirect to={`/viewAll`} />
                 )
         }else{
         if(this.state.loading){
         return (
             
             <div>
-                <Header/>
                 
                 <Container>
 
@@ -163,11 +160,6 @@ export default class UpdateCertificate extends Component {
                 </Form>
                 </div>
                 </Container>
-
-
-
-                <Footer/>
-                <LoginRegister/>
             </div>
         )}else{
             return(

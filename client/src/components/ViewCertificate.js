@@ -1,16 +1,13 @@
-import React, { Component } from 'react'
-
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from 'react';
+import { Col, Container, Form, Row } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-
-import { Form, Container, Row, Col } from "react-bootstrap";
-import { epochToDate, loadBlockchainData } from '../utils/helper';
-import background from "../assets/img/diplome_template.png"
-import Header from '../components/HeaderAdmin'
-import Footer from "../components/Footer";
-import LoginRegister from "../components/LoginRegister";
 import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import background from "../assets/img/diplome_template.png";
+import { epochToDate, loadBlockchainData } from '../utils/helper';
+
+
 
 
 
@@ -49,8 +46,8 @@ class ViewCertificate extends Component {
 
    
     componentDidMount =  async () => {
-        const { match: { params } } = this.props;
-        this.setState({hash: params.hash})
+
+        this.setState({hash: this.props.location.state.params.id})
 
         let data = await loadBlockchainData();
           this.setState({ account: (await data).accounts[0],web3: (await data).web3,contract: (await data).instance });
@@ -82,7 +79,7 @@ class ViewCertificate extends Component {
         if(this.state.loading){
         return (
             <div >
-                <Header/>
+
 
                 <Container style={this.mystyle} >
                
@@ -93,14 +90,16 @@ class ViewCertificate extends Component {
             
                <br/><br/>
                <br/><br/>
+               <br/><br/>
+               
                <Row >
                    <Col style={{textAlign: 'center'}}>
                     <h2>DIPLÔME</h2><br/>
                     <h2>Le DIPLÔME National d'ingénieur</h2>
                     </Col>
                 </Row>
-               <br/><br/>
-               <br/><br/>
+              
+               
                 <Row>
                     <Col className="offset-1" xs="auto" >
                 <Form.Label>Specialité : </Form.Label>
@@ -144,7 +143,7 @@ class ViewCertificate extends Component {
                 </Col>
                 
 
-                    <Col xs="auto" >
+                    <Col xs="auto" className="offset-1" >
                 <Form.Label>Nationalité : </Form.Label>
                 <Form.Control type="text" value={this.state.nationalite} readOnly/>
                 </Col>
@@ -158,9 +157,7 @@ class ViewCertificate extends Component {
                 <Form.Label>Date Realisation Diplome : </Form.Label>
                     <Form.Control  name="dateRealisation" value={this.state.dateRealisation} readOnly></Form.Control>
                     </Col>
-                </Row>
-                <br/>
-                <Row>
+
                     <Col xs="auto" className="offset-1">
                 <Form.Label>Numéro Diplome : </Form.Label>
                 <Form.Control type="text" value={this.state.numeroDiplome}  readOnly/>
@@ -173,10 +170,6 @@ class ViewCertificate extends Component {
                 </Form>
                 </div>
                 </Container>
-
-
-                <Footer/>
-                <LoginRegister/>
               
             </div>
         )}else{

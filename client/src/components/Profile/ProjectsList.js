@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Row,
-    Col,
-} from "reactstrap";
 import { Container } from "@material-ui/core";
-
-
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {
+    Card,
+
+    CardBody, CardHeader,
+
+    CardTitle,
+
+    Col, Row
+} from "reactstrap";
+
+
 
 
 var projects = []
@@ -35,7 +35,7 @@ export default class ProjectsList extends Component {
     getUser() {
         // console.log("entered here :) hello boi");
         // console.log(`${window.location.href.replace("http://localhost:3000/profile/","").replace("/jobs","")}`);
-        fetch(`http://localhost:5000/users/${window.location.href.replace("http://localhost:3000/profile/", "").replace("/projects", "")}`)
+        fetch(`http://localhost:5000/user/${window.location.href.replace("http://localhost:3000/profile/", "").replace("/projects", "")}`)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);

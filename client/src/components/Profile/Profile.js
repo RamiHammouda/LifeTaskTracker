@@ -1,93 +1,135 @@
 
-import React, { Fragment } from "react";
-import Header from '../../components/Header'
-import Footer from "../../components/Footer";
-import LoginRegister from "../../components/LoginRegister";
-// reactstrap components
-import {
-    Row,
-    Col,
-} from "reactstrap";
-
-import UserCard from "./UserCard";
-// import RecentDiplomas from "./RecentDiplomas";
-import RecentDiplomas from "./RecentDiplomas";
-import WorkExp from "./WorkExp";
-import Projects from "./Projects";
-
 import { Container } from "@material-ui/core";
+import React, { Fragment, useEffect, useState } from "react";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { useSelector } from 'react-redux';
+import {
+    Col, Row
+} from "reactstrap";
+import Projects from "./Projects";
+import RecentDiplomas from "./RecentDiplomas";
+import UserCard from "./UserCard";
+import WorkExp from "./WorkExp";
 
 
-// const classes = useStyles();
 
-export default class User extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = { user: null, };
+
+
+
+function User() {
+
+    const auth = useSelector(state => state.auth)
+    const [profile, setProfile] = useState(null)
+    const {user} = auth
+    const [ready,isReady]=useState(false)
+
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/user/${window.location.href.replace("http://localhost:3000/profile/", "")}`)
+    .then(res => res.json())
+    .then(res => {
+        console.log(res[0])
+        setProfile(res[0])
+        isReady(true)
+        
+        
+        // localStorage.setItem("user", JSON.stringify(res));
+    })
+    .catch(err => this.setState({ user: err }));
+   
+    }, [])
+    
+    const loaderStyle={
+        position: 'fixed',
+  top: '50%',
+  left: '50%'
     }
+    if(!ready)
+    {
+        return(<Container style={loaderStyle}><Loader type="BallTriangle" color="#00BFFF" height={80} width={80} timeout={5000} /></Container>)
+    }
+    
+    if(user.length===0)
+    {
+        console.log("not Connected")
+        return(
+        <Fragment>
 
-    render() {
-        if (this.state.user == null) {
-            this.getUser(this.props.match.params.profileUrl);
-            // console.log(this.state.user);
-            if(this.state.user === []){
-                return(<div>User not found</div>);
-            }
-            return (<>hai :)</>);
-        } else {
-            // console.log(this.state.user[0]);
+        <Container>
+            <br />
+            <div className="content">
+                <Row>
+                    {/* Basic user info */}
+                    <Col md="4">
+                        {profile==null ? <div></div> : <UserCard profile={profile} /> }
+                        {/* <RecentDiplomas/> */}
+                    </Col>
+                    {/* Edit Profile */}
+                    <Col md="8">
+                        <Row>
+                            <Col sm="12">
+                            {profile==null ? <div></div> : <RecentDiplomas user={profile} />}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="6">
+                                {profile==null ? <div></div> : <WorkExp user={profile}/> } 
+                            </Col>
+                            <Col md="6">
+                            {profile==null ? <div></div> :<Projects user={profile} /> }
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </div>
+        </Container>
+    </Fragment>
+    )
+    }else{
+
             return (
                 <Fragment>
-                    <Header />
+
                     <Container>
                         <br />
                         <div className="content">
                             <Row>
                                 {/* Basic user info */}
                                 <Col md="4">
-                                    <UserCard user={this.state.user[0]} />
+                                    {profile==null && user==null ? <div></div> : <UserCard user={user} profile={profile} /> }
                                     {/* <RecentDiplomas/> */}
                                 </Col>
                                 {/* Edit Profile */}
                                 <Col md="8">
                                     <Row>
                                         <Col sm="12">
-                                            <RecentDiplomas />
+                                           {user==null ? <div></div> : <RecentDiplomas user={user}  />}
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col md="6">
-                                            <WorkExp user={this.state.user[0]} />
+                                        {user==null ? <div></div> :<WorkExp user={user} />}
                                         </Col>
                                         <Col md="6">
-                                            <Projects user={this.state.user[0]} />
+                                            {user==null ? <div></div> :<Projects user={user} />}
                                         </Col>
                                     </Row>
                                 </Col>
                             </Row>
                         </div>
                     </Container>
-                    <Footer />
-                    <LoginRegister />
                 </Fragment>
 
             );
+
         }
-    }
 
-    getUser(profileId) {
-        // console.log("entered here :) hello boi");
-        fetch("http://localhost:5000/users/" + profileId)
-            .then(res => res.json())
-            .then(res => {
-                // console.log(res[0]);
-                this.setState({ user: res });
-                // console.log(this.state.user);
-                // localStorage.setItem("user", JSON.stringify(res));
-            })
-            .catch(err => this.setState({ user: err }));
-    }
-}
+        
+        
+            }
 
+    
 
+export default User

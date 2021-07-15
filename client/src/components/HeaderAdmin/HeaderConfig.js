@@ -1,22 +1,50 @@
+import axios from 'axios';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function HeaderConfig(props) {
-    const LoginRegHandler = () => {
-        const offCanvasConfig = document.querySelector('.off-canvas-cog');
-        offCanvasConfig.classList.add('active');
-        document.querySelector('body').classList.add('fix');
+
+    const auth = useSelector(state => state.auth)
+
+    const {user, isLogged} = auth
+
+    const handleLogout = async () => {
+        try {
+            await axios.get('/user/logout')
+            localStorage.removeItem('firstLogin')
+            window.location.href = "/";
+        } catch (err) {
+            window.location.href = "/";
+        }
     }
 
-    const MobileMenuHandler = () => {
-        const offCanvasMenu = document.querySelector('.off-canvas-menu');
-        offCanvasMenu.classList.add('active');
+    const userLink = () => {
+        return <li className="drop-nav">
+            <Link to="#" className="avatar">
+            <img src={`/img/profilePictures/${user.profilePicture}`} alt=""/> {user.name}  <i className="fas fa-crown"></i>  <i className="fas fa-angle-down"></i>
+            </Link>
+            <ul className="dropdown">
+                <li><Link to={`/profile/${user.profileId}`}> <i className="far fa-id-badge"></i> Profile</Link></li>
+                <li><Link to="/" onClick={handleLogout}> <i className="fas fa-sign-out-alt"></i> Logout</Link></li>
+            </ul>
+        </li>
+    }
+
+    
+    const transForm = {
+        transform: isLogged ? "translateY(-5px)" : 0
     }
 
     return (
         <div className="header-action mt-lg-3 text-right">
-            
-            <button onClick={LoginRegHandler} className="btn-cog"><i className="fa fa-cog"/></button>
-            <button onClick={MobileMenuHandler} className="btn-menu d-lg-none"><i className="fa fa-bars"/></button>
+            <ul style={transForm}>
+                {
+                    isLogged
+                    ? userLink()
+                    :<li><Link to="/login"><i className="fas fa-user"></i> Sign in</Link></li>
+                }
+            </ul>
         </div>
     );
 }

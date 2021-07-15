@@ -35,6 +35,7 @@ contract Certificate{
         bool isDeleted;
         string numCertificat;//
         uint256 dateRealisation;//
+        string userid;
     }
 
 
@@ -59,7 +60,8 @@ contract Certificate{
     string memory _identifiant,
     string memory _nationalite,
     uint256 _dateRealisation,
-    string memory _numCertificat) onlyOwner public{
+    string memory _numCertificat,
+    string memory _userid) onlyOwner public{
         
         Certificates[numCertificateIssued].id = numCertificateIssued;
         Certificates[numCertificateIssued].Specialite = _specialite;
@@ -73,6 +75,7 @@ contract Certificate{
         
         Certificates[numCertificateIssued].dateRealisation=_dateRealisation;
             Certificates[numCertificateIssued].numCertificat=_numCertificat;
+            Certificates[numCertificateIssued].userid = _userid;
         
         certs.push(numCertificateIssued);
 
@@ -97,7 +100,8 @@ contract Certificate{
     string memory _identifiant,
     string memory _nationalite,
     uint256 _dateRealisation,
-    string memory _numCertificat) public{
+    string memory _numCertificat,
+    string memory _userid) public{
         
         Certificates[_id].Specialite = _specialite;
         Certificates[_id].Session = _session;
@@ -106,6 +110,7 @@ contract Certificate{
         Certificates[_id].lieuNaissance=_lieuNaissance;
         Certificates[_id].identifiant=_identifiant;
         Certificates[_id].Nationalite=_nationalite;
+        Certificates[_id].userid=_userid;
         
             Issuers[_id].dateRealisation=_dateRealisation;
             Issuers[_id].numCertificat=_numCertificat;

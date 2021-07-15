@@ -1,26 +1,23 @@
-import { withSnackbar } from 'components/Snackbar';
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
-import BootstrapTable from 'react-bootstrap-table-next';
-
 import {
     Button,
-    FormGroup,
-    Form,
+
+
+
+
+    Col, Form, FormGroup,
+
     Input,
-    Row,
-    Col,
+    Row
 } from "reactstrap";
-import { Table } from 'react-bootstrap';
+import { withSnackbar } from '../../components/Snackbar';
+
 
 
 var projects = [];
 
-const paginationOption = {
-    custom: true,
-    totalSize: projects.length
-};
 
 
 export class UpdateProjects extends Component {
@@ -250,7 +247,7 @@ export class UpdateProjects extends Component {
                         {projects.map((project) => (
                             <tr key={project._id}>
                                 <td>{project.title}</td>
-                                <td><a href={project.link} target="_blank">{project.link}</a></td>
+                                <td><a href={project.link} target="_blank" rel="noreferrer">{project.link}</a></td>
                                 <td><Button className="btn-round" color="primary" onClick={(e) => {
                                     e.preventDefault();
                                     this.setState({

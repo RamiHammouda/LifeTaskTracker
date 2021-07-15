@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
-import {showErrMsg, showSuccessMsg} from '../../utils/notification/Notification'
-import {isEmpty, isEmail, isLength, isMatch} from '../../utils/validation/Validation'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { showErrMsg, showSuccessMsg } from '../../utils/notification/Notification'
+import { isEmail, isEmpty, isLength, isMatch } from '../../utils/validation/Validation'
 
 
 const initialState = {
     name: '',
     email: '',
-    profileId: '',
     password: '',
+    profileId: '',
     cf_password: '',
     err: '',
     success: ''
@@ -28,7 +28,7 @@ function Register() {
 
     const handleSubmit = async e => {
         e.preventDefault()
-        if(isEmpty(name) || isEmpty(password) || isEmpty(profileId))
+        if(isEmpty(name) || isEmpty(password) || isEmpty(profileId) )
                 return setUser({...user, err: "Please fill in all fields.", success: ''})
 
         if(!isEmail(email))
@@ -41,7 +41,7 @@ function Register() {
             return setUser({...user, err: "Password did not match.", success: ''})
 
         try {
-            const res = await axios.post('http://localhost:5000/users/register', {
+            const res = await axios.post('/user/register', {
                 name, email, password,profileId
             })
 

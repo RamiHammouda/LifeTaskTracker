@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Snackbar from "@material-ui/core/Snackbar";
 import Slide from "@material-ui/core/Slide";
+import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import React, { useState } from "react";
 
 export const withSnackbar = WrappedComponent => {
   return props => {

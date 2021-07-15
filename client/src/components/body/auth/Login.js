@@ -1,11 +1,11 @@
-import React , {useState} from 'react'
-import {Link, useHistory} from 'react-router-dom'
 import axios from 'axios'
-import {showErrMsg, showSuccessMsg} from '../../utils/notification/Notification'
-import {dispatchLogin} from '../../../redux/actions/authAction'
-import {useDispatch} from 'react-redux'
-import { GoogleLogin } from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
+import React, { useState } from 'react'
+import FacebookLogin from 'react-facebook-login'
+import { GoogleLogin } from 'react-google-login'
+import { useDispatch } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import { dispatchLogin } from '../../../redux/actions/authAction'
+import { showErrMsg, showSuccessMsg } from '../../utils/notification/Notification'
 
 const initialState = {
     email: '',
@@ -29,7 +29,7 @@ function Login() {
     const handleSubmit = async e => {
         e.preventDefault()
         try {
-            const res = await axios.post('http://localhost:5000/users/login', {email, password})
+            const res = await axios.post('/user/login', {email, password})
             setUser({...user, err: '', success: res.data.msg})
 
             localStorage.setItem('firstLogin', true)
@@ -44,7 +44,7 @@ function Login() {
     }
     const responseGoogle = async (response) => {
         try {
-            const res = await axios.post('http://localhost:5000/users/google_login', {tokenId: response.tokenId})
+            const res = await axios.post('/user/google_login', {tokenId: response.tokenId})
 
             setUser({...user, error:'', success: res.data.msg})
             localStorage.setItem('firstLogin', true)
@@ -60,7 +60,7 @@ function Login() {
     const responseFacebook = async (response) => {
         try {
             const {accessToken, userID} = response
-            const res = await axios.post('http://localhost:5000/users/facebook_login', {accessToken, userID})
+            const res = await axios.post('/user/facebook_login', {accessToken, userID})
 
             setUser({...user, error:'', success: res.data.msg})
             localStorage.setItem('firstLogin', true)

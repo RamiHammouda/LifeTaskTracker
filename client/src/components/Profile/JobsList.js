@@ -1,15 +1,15 @@
 import { Container } from "@material-ui/core";
-
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
-    Button,
     Card,
-    CardHeader,
-    CardBody,
+
+    CardBody, CardHeader,
+
     CardTitle,
-    Row,
-    Col,
+
+    Col, Row
 } from "reactstrap";
+
 
 
 var jobs = []
@@ -35,7 +35,7 @@ export default class JobsList extends Component {
     getUser() {
         // console.log("entered here :) hello boi");
         // console.log(`${window.location.href.replace("http://localhost:3000/profile/","").replace("/jobs","")}`);
-        fetch(`http://localhost:5000/users/${window.location.href.replace("http://localhost:3000/profile/", "").replace("/jobs", "")}`)
+        fetch(`http://localhost:5000/user/${window.location.href.replace("http://localhost:3000/profile/", "").replace("/jobs", "")}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
@@ -59,13 +59,7 @@ export default class JobsList extends Component {
     }
 
     componentDidMount() {
-        // console.log(this.props.user);
         this.getUser();
-        // while (this.state.user != null) {
-        //     console.log(this.state.user);
-        //     this.getJobs(this.state.user._id);
-        // }
-        // console.log(this.state.jobs);
 
     }
 
