@@ -23,6 +23,21 @@ Mit Certificate Tracker können Sie Ihre Zertifikate dank Blockchain ganz einfac
 ![Created Certificate]()  
 **Certificate Actions**  
 ![Certificate Actions]()  
+4. **A highly customizable profile**  
+**User profile**  
+![User Profile]()  
+**Update Profile**  
+![Update Profile]()  
+**Update Jobs**  
+![Update Jobs]()  
+**Update Personal Projects**  
+![Update Personal Projects]()  
+**Push notification**  
+![Push Notification]()  
+**Email notification**  
+![Email Notification]()  
+**Notifications Page**  
+![Notifications page]() 
 ## Creators 
 - Maher hadj mohamed salah
 - Rami Hammouda
