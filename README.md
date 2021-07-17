@@ -1,12 +1,23 @@
 # CertificateTracker
 Mit Certificate Tracker können Sie Ihre Zertifikate dank Blockchain ganz einfach speichern und verifizieren
 
-# Install Process 
-1. `cd Client`
-2. `npm install`
-3. `install [Metamask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn) on chrome`
-4. `new ganache workspace`
-    1. `in workspace add truffle-config.js`
-    2. `in Server port number 8545`
-    3. `in Account Total account to generate 1 and Default balance set to 10000000000`
-5. `npm run start`
+## Installation  
+1. Install [Metamask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn) 
+2. Create an Ethereum wallet
+3. Add funds to your ethereum wallet.
+4. Install [docker](https://docs.docker.com/get-docker/) and the project's container.
+5. execute the command `docker-compose up -d`.
+6. Start using LifeTaskTracker.  
+**Sign in page**
+![Login Page]()  
+**Sign up page**
+![Sign up page]()
+3. **A simple admin interface**  
+**Users List with details**  
+![Users List with details]()  
+**User Update**  
+![User Update]()  
+## Creators 
+- Maher hadj mohamed salah
+- Rami Hammouda
+- Jaro Manchow
