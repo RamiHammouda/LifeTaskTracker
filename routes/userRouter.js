@@ -162,8 +162,10 @@ router.route("/update/:id").post(upload, (req, res) => {
   var filePath = "";
   if (req.file != null) {
     filePath = req.file.path;
-    console.log(filePath)
-    filePath = filePath.substr(filePath.lastIndexOf('\\') + 1, filePath.length);
+    console.log(filePath);
+   
+      // detectedOS = "Windows";
+      filePath = filePath.substr(filePath.lastIndexOf('\\') + 1, filePath.length);
   }
 
   console.log(filePath);
