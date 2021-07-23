@@ -10,35 +10,21 @@ Mit Certificate Tracker können Sie Ihre Zertifikate dank Blockchain ganz einfac
 6. Start using LifeTaskTracker.  
 
 **Sign in page**
-![Login Page]()  
+![Login Page](https://i.imgur.com/gDbq2VX.png)  
 **Sign up page**
-![Sign up page]()
-3. **A simple admin interface**  
-**Users List with details**  
-![Users List with details]()  
-**User Update**  
-![User Update]()  
-**Add Certificate Form**  
-![Add Certificate Form]()  
-**Created Certificate**  
-![Created Certificate]()  
-**Certificate Actions**  
-![Certificate Actions]()  
+![Sign up page](https://i.imgur.com/6GFjbTh.png)
+3. **A simple admin interface**   
 4. **A highly customizable profile**  
 **User profile**  
-![User Profile]()  
+![User Profile](https://i.imgur.com/dTzOQjR.png)  
 **Update Profile**  
-![Update Profile]()  
+![Update Profile](https://i.imgur.com/dTzOQjR.png)  
 **Update Jobs**  
-![Update Jobs]()  
+![Update Jobs](https://i.imgur.com/POuo4NT.png) 
 **Update Personal Projects**  
-![Update Personal Projects]()  
-**Push notification**  
-![Push Notification]()  
+![Update Personal Projects](https://i.imgur.com/JlBQx3t.png)  
 **Email notification**  
 ![Email Notification]()  
-**Notifications Page**  
-![Notifications page]() 
 
 ## Creators 
 - Maher hadj mohamed salah
@@ -60,6 +46,7 @@ npm install
 cd client
 npm install
 **dev enviroment file**
+downlad "env" file https://1drv.ms/u/s!ApJWQ5hDDFxMjjnBzstjyj9nmZH6?e=zzA5ip
 add "env" file to the original LifeTaskTracker folder
 rename to .env
 **Run**
