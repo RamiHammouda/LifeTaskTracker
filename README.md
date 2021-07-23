@@ -44,3 +44,26 @@ Mit Certificate Tracker können Sie Ihre Zertifikate dank Blockchain ganz einfac
 - Maher hadj mohamed salah
 - Rami Hammouda
 - Jaro Manchow
+
+## Run instruiction
+**VS code**
+run vs code
+open lifeTaskTracker Folder 
+**local npms**
+ctrl+j ( for the terminal )
+npm install react-scripts --save
+npm install sass --save
+npm install --save @fortawesome/fontawesome-free
+npm install --save font-awesome
+npm install 
+**client npms**
+cd client
+npm install
+**dev enviroment file**
+add "env" file to the original LifeTaskTracker folder
+rename to .env
+**Run**
+npm run dev
+**Possible bug**
+incase the http://localhost:3000/ didnt automatically launch
+go to any web browser and paste the link within
