@@ -22,7 +22,7 @@ function Footer() {
                                 </Text>
 
                                 <Text classes="copyright-txt">
-                                    &copy; {new Date().getFullYear()} Easy-Certificate. All Rights Reserved.
+                                    &copy; {new Date().getFullYear()} LifeTaskTracker. All Rights Reserved.
                                 </Text>
                             </div>
                         </div>
@@ -33,8 +33,8 @@ function Footer() {
                     <div className="col-md-4 col-lg-2 ml-auto">
                         <Widget title="Social Links">
                             <List classes="widget-list">
-                                <LI><a href="https://facebook.com/EasyCertificate/" target={'_blank'} rel="noreferrer">Facebook</a></LI>
-                                <LI><a href="https://twitter.com/EasyCertificate/" target={'_blank'} rel="noreferrer">Twitter</a></LI>
+                                <LI><a href="https://facebook.com/LifeTaskTracker/" target={'_blank'} rel="noreferrer">Facebook</a></LI>
+                                <LI><a href="https://twitter.com/LifeTaskTracker/" target={'_blank'} rel="noreferrer">Twitter</a></LI>
 
                             </List>
                         </Widget>

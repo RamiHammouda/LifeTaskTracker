@@ -40,45 +40,7 @@ export default class RecentDiplomas extends Component {
     }
 
 
-    componentDidMount = async () => {
-        this.setState({userid:this.props.user._id})
-        rows=[];
-        let data = await loadBlockchainData();
-        this.setState({ account: (data).accounts[0], web3: (data).web3, contract: (data).instance });
-
-        let size = await this.state.contract.methods.totalCertificates().call();
-
-        for (let index = 0; index <= size -1 ; index++) {
-            let zz = await this.state.contract.methods.Certificates(index).call();
-            console.log(zz)
-            // console.log("this is zz :)");
-            // console.log(zz);
-            if (zz['userid'] === this.props.user._id) {
-                let y = await this.state.contract.methods.Issuers(index).call();
-                console.log(y)
-                // console.log("success pog");
-                // console.log(y);
-                let certificate = {
-                    "nom": zz['Nom'],
-                    "specialite": zz['Specialite'],
-                    "session": zz['Session'],
-                    "dateNaissance": epochToDate(zz['dateNaissance']),
-                    "lieuNaissance": zz['lieuNaissance'],
-                    "nationalite": zz['Nationalite'],
-                    "cin_passport": zz[5],
-                    "dateRealisation": epochToDate(zz['dateRealisation']),
-                    "numeroDiplome": zz['numCertificat'],
-                    "issuer" : y[1],
-                    "certId" : index,
-                }
-                this.setState({'certId':index})
-                rows.push(certificate);
-                // console.log(zz);
-            } else {
-                // console.log("fail :(");
-            }
-
-        }
+    componentDidMount() {
         this.setState({
             rows: rows,
         })

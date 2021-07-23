@@ -127,11 +127,6 @@ function User(props) {
                             {/* Edit Profile */}
                             <Col md="8">
                                 <Row>
-                                    <Col sm="12">
-                                        {profile == null ? <div></div> : <RecentDiplomas user={profile} />}
-                                    </Col>
-                                </Row>
-                                <Row>
                                     <Col md="6">
                                         {profile == null ? <div></div> : <WorkExp user={profile} />}
                                     </Col>
@@ -160,11 +155,6 @@ function User(props) {
                             </Col>
                             {/* Edit Profile */}
                             <Col md="8">
-                                <Row>
-                                    <Col sm="12">
-                                        {user == null ? <div></div> : <RecentDiplomas user={user} />}
-                                    </Col>
-                                </Row>
                                 <Row>
                                     <Col md="6">
                                         {user == null ? <div></div> : <WorkExp user={user} />}

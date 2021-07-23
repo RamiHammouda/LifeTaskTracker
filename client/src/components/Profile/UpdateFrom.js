@@ -135,6 +135,7 @@ class UpdateFrom extends Component {
                     // console.log("request itmes: "+JSON.stringify(formData))
                     if (res.status === 200) {
                         this.props.snackbarShowMessage(`Updated Successfully !`);
+                        window.location.replace(`http://localhost:3000/profile/${this.state.profileId}`);
                     }
                 }).catch(err => {
                     console.log(err);

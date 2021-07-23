@@ -61,16 +61,16 @@ class About extends Component {
                             <Row style={{ alignContent: 'start', alignItems: 'start' }}>
                                 <Col >
                                     <Row >
-                                        <Col > <i style={{ verticalAlign: 'middle', color: '#657786' }} className="fas fa-5x fa-envelope"></i><a href="mailto:easycertificate1@gmail.com" className="stretched-link" style={{ fontSize: '20px', paddingLeft: '20px' }}>easycertificate1@gmail.com</a></Col>
+                                        <Col > <i style={{ verticalAlign: 'middle', color: '#657786' }} className="fas fa-5x fa-envelope"></i><a href="mailto:badpromaher@gmail.com" className="stretched-link" style={{ fontSize: '20px', paddingLeft: '20px' }}>badpromaher@gmail.com</a></Col>
                                     </Row>
 
                                     <Row>
-                                        <Col><i style={{ verticalAlign: 'middle', color: '#006aff' }} className="fab fa-5x fa-facebook-square"></i><span style={{ fontSize: '20px', paddingLeft: '25px' }}>EasyCertificate</span></Col>
+                                        <Col><i style={{ verticalAlign: 'middle', color: '#006aff' }} className="fab fa-5x fa-facebook-square"></i><span style={{ fontSize: '20px', paddingLeft: '25px' }}>LifeTaskTracker</span></Col>
 
                                     </Row>
 
                                     <Row>
-                                        <Col> <i style={{ verticalAlign: 'middle', color: '#1da1f2' }} className="fab fa-5x fa-twitter-square"></i><span style={{ fontSize: '20px', paddingLeft: '25px' }}>@EasyCertificate</span></Col>
+                                        <Col> <i style={{ verticalAlign: 'middle', color: '#1da1f2' }} className="fab fa-5x fa-twitter-square"></i><span style={{ fontSize: '20px', paddingLeft: '25px' }}>@LifeTaskTracker</span></Col>
 
                                     </Row>
 
